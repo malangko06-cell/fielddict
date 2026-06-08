@@ -734,7 +734,7 @@ function goCategory(catId) {
   save();
   state.view = 'category';
   state.categoryId = catId;
-  state.stageId = cat.stages[0]?.id ?? null;
+  state.stageId = cat.stages.length > 0 ? 'all' : null;
   render();
 }
 
@@ -1008,13 +1008,7 @@ function renderCategory(container) {
 
   // Page header
   const pageHeader = h('div', { class: 'page-header' },
-    h('h1', { class: 'page-title' }, cat.name),
-    h('div', { class: 'page-actions' },
-      h('button', { class: 'btn btn-secondary', onClick: () => openAddStageModal(cat.id) }, '+ 단계 추가'),
-      stage
-        ? h('button', { class: 'btn btn-primary', onClick: () => openAddWordModal(cat.id, stage.id) }, '+ 단어 추가')
-        : null
-    )
+    h('h1', { class: 'page-title' }, cat.name)
   );
 
   // Stage flow bar
@@ -1022,6 +1016,10 @@ function renderCategory(container) {
   if (cat.stages.length === 0) {
     flowBar.append(h('span', { class: 'stage-flow-empty' }, '단계가 없습니다. 단계를 추가해 보세요.'));
   } else {
+    flowBar.append(h('button', {
+      class: 'stage-tab' + (state.stageId === 'all' ? ' active' : ''),
+      onClick: () => selectStage('all')
+    }, '전체'));
     cat.stages.forEach(s => {
       const tab = h('button', { class: 'stage-tab' + (s.id === state.stageId ? ' active' : ''), onClick: () => selectStage(s.id) }, s.name);
       flowBar.append(tab);
@@ -1031,7 +1029,28 @@ function renderCategory(container) {
   // Words panel
   const wordsPanel = h('div', { class: 'words-panel' });
 
-  if (!stage) {
+  if (state.stageId === 'all') {
+    const allCatWords = cat.stages.flatMap(s => s.words.map(w => ({ word: w, stage: s })));
+    wordsPanel.append(h('div', { class: 'words-panel-header' },
+      h('span', { class: 'words-panel-title' }, '전체'),
+      h('span', { class: 'words-count' }, `${allCatWords.length}개`)
+    ));
+    if (allCatWords.length === 0) {
+      wordsPanel.append(emptyState('📝', '아직 단어가 없습니다', '단어를 추가해 보세요'));
+    } else {
+      allCatWords.forEach(({ word: w, stage: s }) => {
+        wordsPanel.append(
+          h('div', { class: 'word-item', onClick: () => openWordDetail(cat.id, s.id, w.id) },
+            h('div', { style: 'display:flex;align-items:flex-start;justify-content:space-between;gap:12px' },
+              h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, w.term),
+              h('span', { class: 'tag', style: 'flex-shrink:0' }, s.name)
+            ),
+            h('div', { class: 'word-item-def', style: 'margin-top:4px' }, w.definition || '설명 없음')
+          )
+        );
+      });
+    }
+  } else if (!stage) {
     wordsPanel.append(emptyState('📂', '단계를 선택하세요', ''));
   } else {
     const panelHeader = h('div', { class: 'words-panel-header' },
