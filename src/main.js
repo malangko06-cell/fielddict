@@ -255,7 +255,7 @@ const DEFAULT_DATA = {
     },
     {
       id: 'cat-fin',
-      name: '금융/주식',
+      name: '금융',
       stages: [
         {
           id: 'st-fin1', name: '예금·적금',
