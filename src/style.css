@@ -24,6 +24,23 @@
   --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.16);
 }
 
+[data-theme="dark"] {
+  --blue: #8ea2ff;
+  --blue-light: #1e2a52;
+  --blue-dark: #b5c1ff;
+  --text: #f4f7fb;
+  --text-muted: #b4bdca;
+  --text-faint: #7f8a99;
+  --border: #2b3544;
+  --bg: #10151d;
+  --white: #171d27;
+  --red: #ff7b86;
+  --red-light: #3b1d25;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.32);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+
 body {
   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
@@ -54,6 +71,12 @@ body {
   border: none;
   cursor: pointer;
   letter-spacing: -0.3px;
+}
+
+#header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* ── Main layout ── */
@@ -99,7 +122,8 @@ body {
 }
 
 .btn-secondary:hover {
-  background: #dde3fb;
+  background: var(--blue-light);
+  filter: brightness(0.96);
 }
 
 .btn-ghost {
@@ -119,7 +143,16 @@ body {
 }
 
 .btn-danger:hover {
-  background: #ffd6d8;
+  background: var(--red-light);
+  filter: brightness(0.96);
+}
+
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  justify-content: center;
+  font-size: 16px;
 }
 
 /* ── Page header ── */
@@ -354,7 +387,7 @@ body {
 
 .word-item {
   padding: 16px 20px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--border);
   transition: background 0.12s;
 }
 
@@ -431,6 +464,8 @@ body {
   padding: 28px 30px 24px;
   width: 100%;
   max-width: 460px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
   box-shadow: var(--shadow-lg);
   animation: slide-up 0.2s ease;
 }

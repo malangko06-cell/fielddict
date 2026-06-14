@@ -689,7 +689,19 @@ let state = {
   sortBy: 'alpha',
   allWordsFilterCat: null,
   allWordsSortBy: 'alpha',
+  theme: localStorage.getItem('theme') || 'light',
 };
+
+function applyTheme() {
+  document.documentElement.dataset.theme = state.theme;
+}
+
+function toggleTheme() {
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', state.theme);
+  applyTheme();
+  render();
+}
 
 function save() {
   supabase
@@ -779,6 +791,15 @@ function render() {
         onClick: goAllWords
       }, '전체 단어')
     )
+  );
+
+  headerActions.append(
+    h('button', {
+      class: 'btn btn-ghost theme-toggle',
+      title: state.theme === 'dark' ? '라이트 모드' : '다크 모드',
+      'aria-label': state.theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환',
+      onClick: toggleTheme
+    }, state.theme === 'dark' ? '☀' : '☾')
   );
 
   if (state.view === 'home') {
@@ -1095,130 +1116,147 @@ function closeModal() {
 }
 
 function openWordWizard() {
-  let selectedCat = null;
-  let selectedStage = null;
+  const NEW_CAT = '__new_category__';
+  const NEW_STAGE = '__new_stage__';
+  let catSelect, newCatGroup, newCatEl, stageSelect, newStageGroup, newStageEl, termEl, defEl, nicknameEl;
 
-  function step1() {
-    let newCatEl;
-    const addCat = () => {
-      const name = newCatEl.value.trim();
-      if (!name) { newCatEl.focus(); return; }
-      const cat = { id: uid(), name, stages: [] };
+  const markInvalid = el => {
+    el.style.borderColor = 'var(--red)';
+    el.focus();
+  };
+
+  const selectedCategory = () => state.data.categories.find(c => c.id === catSelect.value);
+
+  const updateNewFields = () => {
+    const isNewCat = catSelect.value === NEW_CAT;
+    const isNewStage = isNewCat || stageSelect.value === NEW_STAGE;
+    if (newCatGroup) newCatGroup.style.display = isNewCat ? 'block' : 'none';
+    if (newStageGroup) newStageGroup.style.display = isNewStage ? 'block' : 'none';
+  };
+
+  const refreshStageSelect = () => {
+    const isNewCategory = catSelect.value === NEW_CAT;
+    const cat = selectedCategory();
+
+    stageSelect.replaceChildren();
+
+    if (isNewCategory) {
+      stageSelect.append(h('option', { value: NEW_STAGE }, '+ 새 카테고리 추가'));
+      stageSelect.value = NEW_STAGE;
+      stageSelect.setAttribute('disabled', 'true');
+      updateNewFields();
+      return;
+    }
+
+    if (!cat) {
+      stageSelect.append(h('option', { value: '' }, '업계를 먼저 선택하세요'));
+      stageSelect.setAttribute('disabled', 'true');
+      updateNewFields();
+      return;
+    }
+
+    stageSelect.removeAttribute('disabled');
+    cat.stages.forEach(stage => {
+      stageSelect.append(h('option', { value: stage.id }, stage.name));
+    });
+    stageSelect.append(h('option', { value: NEW_STAGE }, '+ 새 카테고리 추가'));
+
+    if (cat.stages.length === 0) stageSelect.value = NEW_STAGE;
+    updateNewFields();
+  };
+
+  const submit = () => {
+    const isNewCat = catSelect.value === NEW_CAT;
+    const isNewStage = isNewCat || stageSelect.value === NEW_STAGE;
+    const newCatName = isNewCat ? newCatEl.value.trim() : '';
+    const newStageName = isNewStage ? newStageEl.value.trim() : '';
+    const term = termEl.value.trim();
+    const nickname = nicknameEl.value.trim();
+
+    let cat = isNewCat ? null : selectedCategory();
+    if (!cat && !isNewCat) { markInvalid(catSelect); return; }
+    if (isNewCat && !newCatName) { markInvalid(newCatEl); return; }
+    if (!cat) {
+      cat = { id: uid(), name: newCatName, stages: [] };
       state.data.categories.push(cat);
-      save();
-      selectedCat = cat;
-      step2();
-    };
-    openModal([
-      h('div', { class: 'modal-title' }, '용어 추가'),
-      h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '업계 선택'),
-        state.data.categories.length > 0
-          ? h('div', { style: 'max-height:200px;overflow-y:auto;margin-bottom:4px' },
-              ...state.data.categories.map(cat =>
-                h('button', {
-                  class: 'btn btn-ghost',
-                  style: 'width:100%;justify-content:flex-start;margin-bottom:6px',
-                  onClick: () => { selectedCat = cat; step2(); }
-                }, cat.name)
-              )
-            )
-          : h('p', { style: 'color:var(--text-faint);font-size:13px;margin-bottom:8px' }, '아직 업계가 없습니다.')
-      ),
-      h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '새 업계 추가'),
-        h('div', { style: 'display:flex;gap:8px' },
-          (newCatEl = h('input', { class: 'form-input', type: 'text', placeholder: '업계 이름 (예: IT, 패션, 건축...)' })),
-          h('button', { class: 'btn btn-secondary', style: 'flex-shrink:0', onClick: addCat }, '추가')
-        )
-      ),
-      h('div', { class: 'modal-actions' },
-        h('button', { class: 'btn btn-ghost', onClick: closeModal }, '취소')
-      )
-    ]);
-    newCatEl.addEventListener('keydown', e => { if (e.key === 'Enter') addCat(); });
-  }
+    }
 
-  function step2() {
-    let newStageEl;
-    const addStage = () => {
-      const name = newStageEl.value.trim();
-      if (!name) { newStageEl.focus(); return; }
-      const stage = { id: uid(), name, words: [] };
-      selectedCat.stages.push(stage);
-      save();
-      selectedStage = stage;
-      step3();
-    };
-    openModal([
-      h('div', { class: 'modal-title' }, selectedCat.name),
-      h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '카테고리 선택'),
-        selectedCat.stages.length > 0
-          ? h('div', { style: 'max-height:200px;overflow-y:auto;margin-bottom:4px' },
-              ...selectedCat.stages.map(s =>
-                h('button', {
-                  class: 'btn btn-ghost',
-                  style: 'width:100%;justify-content:flex-start;margin-bottom:6px',
-                  onClick: () => { selectedStage = s; step3(); }
-                }, s.name)
-              )
-            )
-          : h('p', { style: 'color:var(--text-faint);font-size:13px;margin-bottom:8px' }, '아직 카테고리가 없습니다.')
-      ),
-      h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '새 카테고리 추가'),
-        h('div', { style: 'display:flex;gap:8px' },
-          (newStageEl = h('input', { class: 'form-input', type: 'text', placeholder: '카테고리 이름 (예: 기획, 제작, 배포...)' })),
-          h('button', { class: 'btn btn-secondary', style: 'flex-shrink:0', onClick: addStage }, '추가')
-        )
-      ),
-      h('div', { class: 'modal-actions' },
-        h('button', { class: 'btn btn-ghost', onClick: step1 }, '← 뒤로'),
-        h('button', { class: 'btn btn-ghost', onClick: closeModal }, '취소')
-      )
-    ]);
-    newStageEl.addEventListener('keydown', e => { if (e.key === 'Enter') addStage(); });
-  }
+    let stage = isNewStage ? null : cat.stages.find(s => s.id === stageSelect.value);
+    if (!stage && !isNewStage) { markInvalid(stageSelect); return; }
+    if (isNewStage && !newStageName) { markInvalid(newStageEl); return; }
+    if (!stage) {
+      stage = { id: uid(), name: newStageName, words: [] };
+      cat.stages.push(stage);
+    }
 
-  function step3() {
-    let termEl, defEl, nicknameEl;
-    const submit = () => {
-      const term = termEl.value.trim();
-      if (!term) { termEl.style.borderColor = 'var(--red)'; termEl.focus(); return; }
-      if (!nicknameEl.value.trim()) { nicknameEl.style.borderColor = 'var(--red)'; nicknameEl.focus(); return; }
-      const author = { nickname: nicknameEl.value.trim() };
-      selectedStage.words.push({ id: uid(), term, definition: defEl.value.trim(), author });
-      selectedCat.updatedAt = Date.now();
-      save();
-      closeModal();
-      render();
-    };
-    openModal([
-      h('div', { class: 'modal-title' }, '용어 추가'),
-      h('p', { style: 'font-size:13px;color:var(--text-muted);margin:-14px 0 20px' }, `${selectedCat.name}  ›  ${selectedStage.name}`),
-      h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '용어'),
-        (termEl = h('input', { class: 'form-input', type: 'text', placeholder: '용어를 입력하세요' }))
-      ),
-      h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '설명 / 정의'),
-        (defEl = h('textarea', { class: 'form-input', placeholder: '용어의 뜻이나 설명을 입력하세요' }))
-      ),
-      h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '닉네임'),
-        (nicknameEl = h('input', { class: 'form-input', type: 'text', placeholder: '예: 홍길동' }))
-      ),
-      h('div', { class: 'modal-actions' },
-        h('button', { class: 'btn btn-ghost', onClick: step2 }, '← 뒤로'),
-        h('button', { class: 'btn btn-ghost', onClick: closeModal }, '취소'),
-        h('button', { class: 'btn btn-primary', onClick: submit }, '추가')
-      )
-    ]);
-    termEl.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
-  }
+    if (!term) { markInvalid(termEl); return; }
+    if (!nickname) { markInvalid(nicknameEl); return; }
 
-  step1();
+    stage.words.push({ id: uid(), term, definition: defEl.value.trim(), author: { nickname } });
+    cat.updatedAt = Date.now();
+    save();
+    closeModal();
+    render();
+  };
+
+  catSelect = h('select', { class: 'form-input' },
+    state.data.categories.length
+      ? [
+          ...state.data.categories.map(cat => h('option', { value: cat.id }, cat.name)),
+          h('option', { value: NEW_CAT }, '+ 새 업계 추가')
+        ]
+      : h('option', { value: NEW_CAT }, '+ 새 업계 추가')
+  );
+  newCatEl = h('input', { class: 'form-input', type: 'text', placeholder: '새 업계 이름' });
+  stageSelect = h('select', { class: 'form-input' });
+  newStageEl = h('input', { class: 'form-input', type: 'text', placeholder: '새 카테고리 이름' });
+  termEl = h('input', { class: 'form-input', type: 'text', placeholder: '용어를 입력하세요' });
+  defEl = h('textarea', { class: 'form-input', placeholder: '용어의 뜻이나 설명을 입력하세요' });
+  nicknameEl = h('input', { class: 'form-input', type: 'text', placeholder: '예: 홍길동' });
+
+  catSelect.addEventListener('change', refreshStageSelect);
+  stageSelect.addEventListener('change', updateNewFields);
+  termEl.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+  nicknameEl.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+
+  refreshStageSelect();
+
+  openModal([
+    h('div', { class: 'modal-title' }, '용어 추가'),
+    h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '업계 선택'),
+      catSelect
+    ),
+    (newCatGroup = h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '새 업계 이름'),
+      newCatEl
+    )),
+    h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '카테고리 선택'),
+      stageSelect
+    ),
+    (newStageGroup = h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '새 카테고리 이름'),
+      newStageEl
+    )),
+    h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '용어'),
+      termEl
+    ),
+    h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '설명 / 정의'),
+      defEl
+    ),
+    h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '닉네임'),
+      nicknameEl
+    ),
+    h('div', { class: 'modal-actions' },
+      h('button', { class: 'btn btn-ghost', onClick: closeModal }, '취소'),
+      h('button', { class: 'btn btn-primary', onClick: submit }, '추가')
+    )
+  ]);
+  updateNewFields();
 }
 
 // Add category
@@ -1341,6 +1379,7 @@ document.addEventListener('keydown', e => {
 });
 
 document.getElementById('logo-btn').addEventListener('click', goHome);
+applyTheme();
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 async function init() {
