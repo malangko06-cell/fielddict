@@ -718,6 +718,7 @@ function goHome() {
   state.stageId = null;
   state.searchQuery = '';
   render();
+  window.scrollTo(0, 0);
 }
 
 function goAllWords() {
@@ -725,6 +726,7 @@ function goAllWords() {
   state.searchQuery = '';
   state.allWordsFilterCat = null;
   render();
+  window.scrollTo(0, 0);
 }
 
 function goCategory(catId) {
@@ -736,6 +738,7 @@ function goCategory(catId) {
   state.categoryId = catId;
   state.stageId = cat.stages.length > 0 ? 'all' : null;
   render();
+  window.scrollTo(0, 0);
 }
 
 function selectStage(stageId) {
@@ -843,6 +846,7 @@ function renderHome(container) {
             state.stageId = s.id;
             state.view = 'category';
             render();
+            window.scrollTo(0, 0);
           });
           stageFlow.append(btn);
         });
