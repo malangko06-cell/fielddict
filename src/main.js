@@ -5,42 +5,33 @@ const DEFAULT_DATA = {
   categories: [
     {
       id: 'cat-print',
-      name: '인쇄',
+      name: '인쇄/출판',
       stages: [
         {
           id: 'st-p1',
-          name: '기획',
+          name: '편집',
           words: [
-            { id: 'w-p1', term: '프로젝트 브리핑', definition: '인쇄물 제작 전 클라이언트와 목적, 수량, 납기, 예산 등을 협의하는 초기 미팅 단계.' },
-            { id: 'w-p2', term: '견적서', definition: '인쇄 작업에 필요한 비용을 용지, 수량, 후가공 등 항목별로 산출하여 제시하는 문서.' },
-            { id: 'w-p3', term: '레이아웃 기획', definition: '텍스트, 이미지, 여백 등 각 요소의 배치를 사전에 설계하는 작업. 시안 제작 전 단계.' }
+            { id: 'w-p1', term: '누끼', definition: '그림 등의 필요한 형태만 도려내는 이미지 추출 작업' },
+            { id: 'w-p2', term: '도비라', definition: '책의 내지와 내지 사이에 삽입되는 소제목 페이지' },
+            { id: 'w-p3', term: '베다', definition: '남는 공간이 없도록 잉크를 100% 올리는 것, 농도나 명암없이 100% 잉크로 인쇄하는 부분' }
           ]
         },
         {
           id: 'st-p2',
-          name: '종이 선택',
+          name: '인쇄/제본',
           words: [
-            { id: 'w-p4', term: '아트지', definition: '표면에 클레이를 코팅하여 광택이 나는 고급 인쇄용지. 사진이나 컬러 인쇄에 적합하며 잡지·카탈로그에 주로 사용.' },
-            { id: 'w-p5', term: '모조지', definition: '코팅 처리 없이 제조한 일반 인쇄용지. 필기가 가능하고 발색이 자연스러워 책·복사용지·사무용으로 많이 사용.' },
-            { id: 'w-p6', term: '코팅지', definition: '표면에 수성 또는 UV 코팅을 한 용지. 방수성과 내구성이 높아 포장재·쇼핑백 등에 활용.' }
+            { id: 'w-p4', term: '하리꼬미(터잡기)', definition: '인쇄 전 인쇄면을 큰 용지에 배치하는 작업' },
+            { id: 'w-p5', term: '베라제본', definition: '낱장으로 된 인쇄물의 제본 방식. 주로 디지털 인쇄에서 사용된다. (ex. 캘린더)' },
+            { id: 'w-p6', term: '돔보', definition: '4도(4COLOR)혹은 2색 이상 인쇄할 때, 각 색판의 가늠을 잡기 위해 삽입하는 인쇄판 짧은 변 중앙에 가늠용 표' }
           ]
         },
         {
           id: 'st-p3',
-          name: '인쇄 방식',
-          words: [
-            { id: 'w-p7', term: '오프셋 인쇄', definition: '판에 잉크를 묻혀 블랭킷 롤러를 경유해 종이에 전사하는 방식. 품질이 균일하고 대량 인쇄에 비용 효율적.' },
-            { id: 'w-p8', term: '디지털 인쇄', definition: '디지털 파일을 직접 인쇄기로 출력하는 방식. 판이 필요 없어 소량·맞춤형 인쇄와 빠른 납기에 적합.' },
-            { id: 'w-p9', term: '실크스크린', definition: '망사 스크린을 통해 잉크를 밀어 찍는 방식. 천·플라스틱·금속 등 다양한 소재에 적용 가능하며 발색이 선명.' }
-          ]
-        },
-        {
-          id: 'st-p4',
           name: '후가공',
           words: [
-            { id: 'w-p10', term: '코팅(라미네이팅)', definition: '인쇄물 표면에 필름을 열압착으로 붙이는 가공. 유광(글로시)과 무광(매트) 두 종류가 있으며 내구성을 높임.' },
-            { id: 'w-p11', term: '형압(엠보싱)', definition: '열과 압력을 이용해 인쇄물 표면에 입체적인 패턴을 찍어내는 가공. 명함·패키지에 고급감을 부여.' },
-            { id: 'w-p12', term: '박찍기(핫포일)', definition: '금색·은색 등 금속 느낌의 박지를 열압착으로 인쇄물에 부착하는 가공. 표지·명함의 포인트 장식에 활용.' }
+            { id: 'w-p7', term: '도무송', definition: '인쇄물에 칼선을 넣는 방식의 일종. 종이를 특정 모양으로 재단하는 것 (ex. 스티커)' },
+            { id: 'w-p8', term: '싸바리', definition: '책의 표지 부분을 천이나 종이를 이용해 감싸서 단단하게 만드는 것' },
+            { id: 'w-p9', term: '오시', definition: '접어야 하는 부분에 홈을 내는 후가공. 청첩장 쿠폰 초대장 접이식 명함 등에 사용' }
           ]
         }
       ]
@@ -744,6 +735,7 @@ function goCategory(catId) {
 function selectStage(stageId) {
   state.stageId = stageId;
   render();
+  window.scrollTo(0, 0);
 }
 
 // ── Render helpers ──────────────────────────────────────────────────────────
@@ -791,12 +783,12 @@ function render() {
 
   if (state.view === 'home') {
     headerActions.append(
-      h('button', { class: 'btn btn-primary', onClick: openWordWizard }, '+ 단어 추가')
+      h('button', { class: 'btn btn-primary', onClick: openWordWizard }, '+ 용어 추가')
     );
     renderHome(app);
   } else if (state.view === 'all-words') {
     headerActions.append(
-      h('button', { class: 'btn btn-primary', onClick: openWordWizard }, '+ 단어 추가')
+      h('button', { class: 'btn btn-primary', onClick: openWordWizard }, '+ 용어 추가')
     );
     renderAllWords(app);
   } else if (state.view === 'category') {
@@ -963,11 +955,11 @@ function renderAllWords(container) {
     } else {
       allWords.forEach(({ word, cat, stage }) => {
         panel.append(
-          h('div', { class: 'word-item', onClick: () => openWordDetail(cat.id, stage.id, word.id) },
+          h('div', { class: 'word-item' },
             h('div', { style: 'display:flex;align-items:flex-start;justify-content:space-between;gap:12px' },
               h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, word.term),
               h('div', { style: 'display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end' },
-                h('span', { class: 'tag' }, cat.name),
+                h('button', { class: 'tag tag-button', onClick: () => goCategory(cat.id) }, cat.name),
                 h('span', { class: 'tag' }, stage.name)
               )
             ),
@@ -1044,10 +1036,10 @@ function renderCategory(container) {
     } else {
       allCatWords.forEach(({ word: w, stage: s }) => {
         wordsPanel.append(
-          h('div', { class: 'word-item', onClick: () => openWordDetail(cat.id, s.id, w.id) },
+          h('div', { class: 'word-item' },
             h('div', { style: 'display:flex;align-items:flex-start;justify-content:space-between;gap:12px' },
               h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, w.term),
-              h('span', { class: 'tag', style: 'flex-shrink:0' }, s.name)
+              h('button', { class: 'tag tag-button', style: 'flex-shrink:0', onClick: () => selectStage(s.id) }, s.name)
             ),
             h('div', { class: 'word-item-def', style: 'margin-top:4px' }, w.definition || '설명 없음')
           )
@@ -1064,10 +1056,10 @@ function renderCategory(container) {
     wordsPanel.append(panelHeader);
 
     if (stage.words.length === 0) {
-      wordsPanel.append(emptyState('📝', '아직 단어가 없습니다', '위의 [+ 단어 추가] 버튼으로 첫 단어를 등록해 보세요'));
+      wordsPanel.append(emptyState('📝', '아직 단어가 없습니다', '위의 [+ 용어 추가] 버튼으로 첫 단어를 등록해 보세요'));
     } else {
       stage.words.forEach(w => {
-        const item = h('div', { class: 'word-item', onClick: () => openWordDetail(cat.id, stage.id, w.id) },
+        const item = h('div', { class: 'word-item' },
           h('div', { class: 'word-item-term' }, w.term),
           h('div', { class: 'word-item-def' }, w.definition || '설명 없음')
         );
@@ -1085,18 +1077,6 @@ function emptyState(icon, title, sub) {
     h('div', { class: 'empty-title' }, title),
     sub ? h('div', { class: 'empty-sub' }, sub) : null
   );
-}
-
-function makeRoleSelect(value = '') {
-  const sel = h('select', { class: 'form-input' });
-  ['학생', '일반인', ...state.data.categories.map(c => c.name), '기타'].forEach(opt => {
-    const option = document.createElement('option');
-    option.value = opt;
-    option.textContent = opt;
-    sel.append(option);
-  });
-  sel.value = value || '학생';
-  return sel;
 }
 
 // ── Modals ──────────────────────────────────────────────────────────────────
@@ -1130,7 +1110,7 @@ function openWordWizard() {
       step2();
     };
     openModal([
-      h('div', { class: 'modal-title' }, '단어 추가'),
+      h('div', { class: 'modal-title' }, '용어 추가'),
       h('div', { class: 'form-group' },
         h('label', { class: 'form-label' }, '업계 선택'),
         state.data.categories.length > 0
@@ -1173,7 +1153,7 @@ function openWordWizard() {
     openModal([
       h('div', { class: 'modal-title' }, selectedCat.name),
       h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '단계 선택'),
+        h('label', { class: 'form-label' }, '카테고리 선택'),
         selectedCat.stages.length > 0
           ? h('div', { style: 'max-height:200px;overflow-y:auto;margin-bottom:4px' },
               ...selectedCat.stages.map(s =>
@@ -1184,12 +1164,12 @@ function openWordWizard() {
                 }, s.name)
               )
             )
-          : h('p', { style: 'color:var(--text-faint);font-size:13px;margin-bottom:8px' }, '아직 단계가 없습니다.')
+          : h('p', { style: 'color:var(--text-faint);font-size:13px;margin-bottom:8px' }, '아직 카테고리가 없습니다.')
       ),
       h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '새 단계 추가'),
+        h('label', { class: 'form-label' }, '새 카테고리 추가'),
         h('div', { style: 'display:flex;gap:8px' },
-          (newStageEl = h('input', { class: 'form-input', type: 'text', placeholder: '단계 이름 (예: 기획, 제작, 배포...)' })),
+          (newStageEl = h('input', { class: 'form-input', type: 'text', placeholder: '카테고리 이름 (예: 기획, 제작, 배포...)' })),
           h('button', { class: 'btn btn-secondary', style: 'flex-shrink:0', onClick: addStage }, '추가')
         )
       ),
@@ -1202,13 +1182,12 @@ function openWordWizard() {
   }
 
   function step3() {
-    let termEl, defEl, nicknameEl, roleEl;
+    let termEl, defEl, nicknameEl;
     const submit = () => {
       const term = termEl.value.trim();
       if (!term) { termEl.style.borderColor = 'var(--red)'; termEl.focus(); return; }
       if (!nicknameEl.value.trim()) { nicknameEl.style.borderColor = 'var(--red)'; nicknameEl.focus(); return; }
-      if (!roleEl.value) { roleEl.style.borderColor = 'var(--red)'; roleEl.focus(); return; }
-      const author = { nickname: nicknameEl.value.trim(), role: roleEl.value };
+      const author = { nickname: nicknameEl.value.trim() };
       selectedStage.words.push({ id: uid(), term, definition: defEl.value.trim(), author });
       selectedCat.updatedAt = Date.now();
       save();
@@ -1216,23 +1195,19 @@ function openWordWizard() {
       render();
     };
     openModal([
-      h('div', { class: 'modal-title' }, '단어 추가'),
+      h('div', { class: 'modal-title' }, '용어 추가'),
       h('p', { style: 'font-size:13px;color:var(--text-muted);margin:-14px 0 20px' }, `${selectedCat.name}  ›  ${selectedStage.name}`),
       h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '단어 / 용어'),
-        (termEl = h('input', { class: 'form-input', type: 'text', placeholder: '단어나 용어를 입력하세요' }))
+        h('label', { class: 'form-label' }, '용어'),
+        (termEl = h('input', { class: 'form-input', type: 'text', placeholder: '용어를 입력하세요' }))
       ),
       h('div', { class: 'form-group' },
         h('label', { class: 'form-label' }, '설명 / 정의'),
-        (defEl = h('textarea', { class: 'form-input', placeholder: '단어의 뜻이나 설명을 입력하세요' }))
+        (defEl = h('textarea', { class: 'form-input', placeholder: '용어의 뜻이나 설명을 입력하세요' }))
       ),
       h('div', { class: 'form-group' },
         h('label', { class: 'form-label' }, '닉네임'),
         (nicknameEl = h('input', { class: 'form-input', type: 'text', placeholder: '예: 홍길동' }))
-      ),
-      h('div', { class: 'form-group' },
-        h('label', { class: 'form-label' }, '소속 / 직군'),
-        (roleEl = makeRoleSelect())
       ),
       h('div', { class: 'modal-actions' },
         h('button', { class: 'btn btn-ghost', onClick: step2 }, '← 뒤로'),
@@ -1305,152 +1280,41 @@ function addStage(catId, name) {
 
 // Add word
 function openAddWordModal(catId, stageId) {
-  let termEl, defEl, nicknameEl, roleEl;
+  let termEl, defEl, nicknameEl;
   openModal([
-    h('div', { class: 'modal-title' }, '새 단어 추가'),
+    h('div', { class: 'modal-title' }, '새 용어 추가'),
     h('div', { class: 'form-group' },
-      h('label', { class: 'form-label' }, '단어 / 용어'),
-      (termEl = h('input', { class: 'form-input', type: 'text', placeholder: '단어나 용어를 입력하세요' }))
+      h('label', { class: 'form-label' }, '용어'),
+      (termEl = h('input', { class: 'form-input', type: 'text', placeholder: '용어를 입력하세요' }))
     ),
     h('div', { class: 'form-group' },
       h('label', { class: 'form-label' }, '설명 / 정의'),
-      (defEl = h('textarea', { class: 'form-input', placeholder: '단어의 뜻이나 설명을 입력하세요' }))
+      (defEl = h('textarea', { class: 'form-input', placeholder: '용어의 뜻이나 설명을 입력하세요' }))
     ),
     h('div', { class: 'form-group' },
       h('label', { class: 'form-label' }, '닉네임'),
       (nicknameEl = h('input', { class: 'form-input', type: 'text', placeholder: '예: 홍길동' }))
-    ),
-    h('div', { class: 'form-group' },
-      h('label', { class: 'form-label' }, '소속 / 직군'),
-      (roleEl = makeRoleSelect())
     ),
     h('div', { class: 'modal-actions' },
       h('button', { class: 'btn btn-ghost', onClick: closeModal }, '취소'),
       h('button', { class: 'btn btn-primary', onClick: () => {
         if (!termEl.value.trim()) { termEl.style.borderColor = 'var(--red)'; termEl.focus(); return; }
         if (!nicknameEl.value.trim()) { nicknameEl.style.borderColor = 'var(--red)'; nicknameEl.focus(); return; }
-        if (!roleEl.value) { roleEl.style.borderColor = 'var(--red)'; roleEl.focus(); return; }
-        addWord(catId, stageId, termEl.value, defEl.value, nicknameEl.value, roleEl.value);
+        addWord(catId, stageId, termEl.value, defEl.value, nicknameEl.value);
       } }, '추가')
     )
   ]);
 }
 
-function addWord(catId, stageId, term, definition, nickname = '', role = '') {
+function addWord(catId, stageId, term, definition, nickname = '') {
   term = term.trim();
   if (!term) { shakeInput(); return; }
   const cat = state.data.categories.find(c => c.id === catId);
   const stage = cat?.stages.find(s => s.id === stageId);
   if (!stage) return;
-  stage.words.push({ id: uid(), term, definition: definition.trim(), author: { nickname: nickname.trim(), role } });
+  stage.words.push({ id: uid(), term, definition: definition.trim(), author: { nickname: nickname.trim() } });
   const cat2 = state.data.categories.find(c => c.id === catId);
   if (cat2) cat2.updatedAt = Date.now();
-  save();
-  closeModal();
-  render();
-}
-
-// Word detail
-function openWordDetail(catId, stageId, wordId) {
-  const cat = state.data.categories.find(c => c.id === catId);
-  const stage = cat?.stages.find(s => s.id === stageId);
-  const word = stage?.words.find(w => w.id === wordId);
-  if (!word) return;
-  word.views = (word.views ?? 0) + 1;
-  save();
-
-  const authorParts = [word.author?.nickname, word.author?.role].filter(Boolean);
-
-  openModal([
-    h('div', { class: 'word-detail-term' }, word.term),
-    h('div', { class: 'word-detail-tags' },
-      h('span', { class: 'tag' }, cat.name),
-      h('span', { class: 'tag' }, stage.name)
-    ),
-    h('div', { class: 'word-detail-def' }, word.definition || '설명이 없습니다.'),
-    authorParts.length
-      ? h('div', { class: 'word-detail-author' }, '✏ ' + authorParts.join(' · '))
-      : null,
-    h('div', { class: 'modal-actions', style: 'margin-top:24px' },
-      h('button', { class: 'btn btn-danger', onClick: () => openEditWordModal(catId, stageId, wordId) }, '수정'),
-      h('button', { class: 'btn btn-primary', onClick: closeModal }, '닫기')
-    )
-  ]);
-}
-
-// Edit word
-function openEditWordModal(catId, stageId, wordId) {
-  const cat = state.data.categories.find(c => c.id === catId);
-  const stage = cat?.stages.find(s => s.id === stageId);
-  const word = stage?.words.find(w => w.id === wordId);
-  if (!word) return;
-
-  let termEl, defEl, nicknameEl, roleEl;
-  const termInput = h('input', { class: 'form-input', type: 'text' });
-  termInput.value = word.term;
-  termEl = termInput;
-
-  const defInput = h('textarea', { class: 'form-input' });
-  defInput.value = word.definition;
-  defEl = defInput;
-
-  nicknameEl = h('input', { class: 'form-input', type: 'text', placeholder: '예: 홍길동' });
-  nicknameEl.value = word.author?.nickname ?? '';
-
-  roleEl = makeRoleSelect(word.author?.role ?? '');
-
-  openModal([
-    h('div', { class: 'modal-title' }, '단어 수정'),
-    h('div', { class: 'form-group' },
-      h('label', { class: 'form-label' }, '단어 / 용어'),
-      termEl
-    ),
-    h('div', { class: 'form-group' },
-      h('label', { class: 'form-label' }, '설명 / 정의'),
-      defEl
-    ),
-    h('div', { class: 'form-group' },
-      h('label', { class: 'form-label' }, '닉네임'),
-      nicknameEl
-    ),
-    h('div', { class: 'form-group' },
-      h('label', { class: 'form-label' }, '소속 / 직군'),
-      roleEl
-    ),
-    h('div', { class: 'modal-actions' },
-      h('button', { class: 'btn btn-danger', onClick: () => deleteWord(catId, stageId, wordId) }, '삭제'),
-      h('button', { class: 'btn btn-ghost', onClick: () => openWordDetail(catId, stageId, wordId) }, '취소'),
-      h('button', { class: 'btn btn-primary', onClick: () => {
-        if (!termEl.value.trim()) { termEl.style.borderColor = 'var(--red)'; termEl.focus(); return; }
-        if (!nicknameEl.value.trim()) { nicknameEl.style.borderColor = 'var(--red)'; nicknameEl.focus(); return; }
-        if (!roleEl.value) { roleEl.style.borderColor = 'var(--red)'; roleEl.focus(); return; }
-        saveWord(catId, stageId, wordId, termEl.value, defEl.value, nicknameEl.value, roleEl.value);
-      } }, '저장')
-    )
-  ]);
-}
-
-function saveWord(catId, stageId, wordId, term, definition, nickname = '', role = '') {
-  term = term.trim();
-  if (!term) { shakeInput(); return; }
-  const cat = state.data.categories.find(c => c.id === catId);
-  const stage = cat?.stages.find(s => s.id === stageId);
-  const word = stage?.words.find(w => w.id === wordId);
-  if (!word) return;
-  word.term = term;
-  word.definition = definition.trim();
-  word.author = { nickname: nickname.trim(), role };
-  save();
-  closeModal();
-  render();
-}
-
-function deleteWord(catId, stageId, wordId) {
-  if (!confirm('이 단어를 삭제할까요?')) return;
-  const cat = state.data.categories.find(c => c.id === catId);
-  const stage = cat?.stages.find(s => s.id === stageId);
-  if (!stage) return;
-  stage.words = stage.words.filter(w => w.id !== wordId);
   save();
   closeModal();
   render();

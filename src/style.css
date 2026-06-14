@@ -192,7 +192,7 @@ body {
 .category-card-name {
   font-size: 18px;
   font-weight: 700;
-  letter---spacing: -0.3px;
+  letter-spacing: -0.3px;
 }
 
 .stage-flow {
@@ -355,7 +355,6 @@ body {
 .word-item {
   padding: 16px 20px;
   border-bottom: 1px solid #f3f4f6;
-  cursor: pointer;
   transition: background 0.12s;
 }
 
@@ -378,10 +377,6 @@ body {
   font-size: 13px;
   color: var(--text-muted);
   line-height: 1.55;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 /* ── Empty states ── */
@@ -497,43 +492,25 @@ textarea.form-input {
   margin-top: 22px;
 }
 
-/* ── Word detail inside modal ── */
-.word-detail-term {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  margin-bottom: 10px;
-}
-
-.word-detail-tags {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
 .tag {
+  border: 0;
   padding: 3px 11px;
   background: var(--blue-light);
   color: var(--blue);
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
+  font-family: inherit;
 }
 
-.word-detail-author {
-  font-size: 12.5px;
-  color: var(--text-faint);
-  margin-top: 16px;
+.tag-button {
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
 }
 
-.word-detail-def {
-  font-size: 15px;
-  color: #444;
-  line-height: 1.75;
-  border-left: 3px solid var(--blue);
-  padding-left: 16px;
-  min-height: 48px;
+.tag-button:hover {
+  background: var(--blue);
+  color: var(--white);
 }
 
 /* ── Sort bar ── */
