@@ -1118,7 +1118,7 @@ function closeModal() {
 function openWordWizard() {
   const NEW_CAT = '__new_category__';
   const NEW_STAGE = '__new_stage__';
-  let catSelect, newCatGroup, newCatEl, stageSelect, newStageGroup, newStageEl, termEl, defEl, nicknameEl;
+  let catSelect, newCatGroup, newCatEl, stageSelect, newStageGroup, newStageEl, termEl, defEl, exampleEl, nicknameEl;
 
   const markInvalid = el => {
     el.style.borderColor = 'var(--red)';
@@ -1192,7 +1192,7 @@ function openWordWizard() {
     if (!term) { markInvalid(termEl); return; }
     if (!nickname) { markInvalid(nicknameEl); return; }
 
-    stage.words.push({ id: uid(), term, definition: defEl.value.trim(), author: { nickname } });
+    stage.words.push({ id: uid(), term, definition: defEl.value.trim(), example: exampleEl.value.trim(), author: { nickname } });
     cat.updatedAt = Date.now();
     save();
     closeModal();
@@ -1212,6 +1212,7 @@ function openWordWizard() {
   newStageEl = h('input', { class: 'form-input', type: 'text', placeholder: '새 카테고리 이름' });
   termEl = h('input', { class: 'form-input', type: 'text', placeholder: '용어를 입력하세요' });
   defEl = h('textarea', { class: 'form-input', placeholder: '용어의 뜻이나 설명을 입력하세요' });
+  exampleEl = h('textarea', { class: 'form-input', placeholder: '예문을 입력하세요 (선택)' });
   nicknameEl = h('input', { class: 'form-input', type: 'text', placeholder: '예: 홍길동' });
 
   catSelect.addEventListener('change', refreshStageSelect);
@@ -1246,6 +1247,10 @@ function openWordWizard() {
     h('div', { class: 'form-group' },
       h('label', { class: 'form-label' }, '설명 / 정의'),
       defEl
+    ),
+    h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '예문'),
+      exampleEl
     ),
     h('div', { class: 'form-group' },
       h('label', { class: 'form-label' }, '닉네임'),
@@ -1318,7 +1323,7 @@ function addStage(catId, name) {
 
 // Add word
 function openAddWordModal(catId, stageId) {
-  let termEl, defEl, nicknameEl;
+  let termEl, defEl, exampleEl, nicknameEl;
   openModal([
     h('div', { class: 'modal-title' }, '새 용어 추가'),
     h('div', { class: 'form-group' },
@@ -1330,6 +1335,10 @@ function openAddWordModal(catId, stageId) {
       (defEl = h('textarea', { class: 'form-input', placeholder: '용어의 뜻이나 설명을 입력하세요' }))
     ),
     h('div', { class: 'form-group' },
+      h('label', { class: 'form-label' }, '예문'),
+      (exampleEl = h('textarea', { class: 'form-input', placeholder: '예문을 입력하세요 (선택)' }))
+    ),
+    h('div', { class: 'form-group' },
       h('label', { class: 'form-label' }, '닉네임'),
       (nicknameEl = h('input', { class: 'form-input', type: 'text', placeholder: '예: 홍길동' }))
     ),
@@ -1338,19 +1347,19 @@ function openAddWordModal(catId, stageId) {
       h('button', { class: 'btn btn-primary', onClick: () => {
         if (!termEl.value.trim()) { termEl.style.borderColor = 'var(--red)'; termEl.focus(); return; }
         if (!nicknameEl.value.trim()) { nicknameEl.style.borderColor = 'var(--red)'; nicknameEl.focus(); return; }
-        addWord(catId, stageId, termEl.value, defEl.value, nicknameEl.value);
+        addWord(catId, stageId, termEl.value, defEl.value, nicknameEl.value, exampleEl.value);
       } }, '추가')
     )
   ]);
 }
 
-function addWord(catId, stageId, term, definition, nickname = '') {
+function addWord(catId, stageId, term, definition, nickname = '', example = '') {
   term = term.trim();
   if (!term) { shakeInput(); return; }
   const cat = state.data.categories.find(c => c.id === catId);
   const stage = cat?.stages.find(s => s.id === stageId);
   if (!stage) return;
-  stage.words.push({ id: uid(), term, definition: definition.trim(), author: { nickname: nickname.trim() } });
+  stage.words.push({ id: uid(), term, definition: definition.trim(), example: example.trim(), author: { nickname: nickname.trim() } });
   const cat2 = state.data.categories.find(c => c.id === catId);
   if (cat2) cat2.updatedAt = Date.now();
   save();
