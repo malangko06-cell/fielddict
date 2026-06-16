@@ -38,62 +38,40 @@ const DEFAULT_DATA = {
     },
     {
       id: 'cat-arch',
-      name: '건축/인테리어',
+      name: '건설',
       stages: [
         {
-          id: 'st-arch1', name: '철거',
+          id: 'st-arch-work', name: '작업',
           words: [
-            { id: 'w-arch1', term: '석면조사', definition: '철거 전 건축 자재에 석면 함유 여부를 공인기관이 검사하는 절차. 석면 검출 시 별도 해체 공사 필요.' },
-            { id: 'w-arch2', term: '가설공사', definition: '본 공사를 위해 임시로 설치하는 공사. 비계·가설 울타리·임시 전기 등이 해당.' },
-            { id: 'w-arch3', term: '철거허가', definition: '연면적 500㎡ 이상 건물 철거 시 관할 구청에 제출하는 신고·허가 서류.' }
+            { id: 'w-arch1', term: '단도리', definition: '채비 또는 정리정돈. 현장에서 작업을 시작하기 전 준비하는 과정' },
+            { id: 'w-arch2', term: '나라시', definition: '고르기. 땅바닥이나 모래 등을 평평하게 펴서 고르는 작업' },
+            { id: 'w-arch3', term: '야리끼리', definition: '정해진 물량을 다 끝내면 그날 일을 마치는 능력제/도급 작업' },
+            { id: 'w-arch4', term: '시마이', definition: '작업의 마감이나 끝' }
           ]
         },
         {
-          id: 'st-arch2', name: '설비·배관',
+          id: 'st-arch-tools', name: '자재 및 공구',
           words: [
-            { id: 'w-arch4', term: '급배수 배관', definition: '물을 공급(급수)하고 배출(배수)하는 배관 시스템. 소재에 따라 PVC·동관·스테인리스관으로 구분.' },
-            { id: 'w-arch5', term: '냉매 배관', definition: '냉난방 시스템의 실내기와 실외기를 연결해 냉매를 순환시키는 동관.' },
-            { id: 'w-arch6', term: '역류방지밸브', definition: '배관 내 유체가 역방향으로 흐르는 것을 막는 밸브. 오수·악취 역류 방지에 필수.' }
+            { id: 'w-arch5', term: '다루끼 / 가꾸목', definition: "목재의 두께에 따른 각목으로, '다루끼'는 얇은 각목, '가꾸목'은 두꺼운 각목을 뜻함" },
+            { id: 'w-arch6', term: '빠루', definition: '못을 뽑거나 물체를 뜯어낼 때 쓰는 쇠지레(노루발못뽑이)' },
+            { id: 'w-arch7', term: '고데', definition: '미장 작업이나 퍼티를 바를 때 쓰는 흙손(헤라)' },
+            { id: 'w-arch8', term: '도이시', definition: '그라인더 등에 장착해 사용하는 숫돌' },
+            { id: 'w-arch9', term: '다마', definition: '둥근 형태의 구슬이나 전구, 볼트/너트의 규격(지름)' }
           ]
         },
         {
-          id: 'st-arch3', name: '전기',
+          id: 'st-arch-parts', name: '시공 부위 및 도면',
           words: [
-            { id: 'w-arch7', term: '분전반', definition: '전력을 각 회로로 분배하는 배전 설비. 차단기(브레이커)가 모여 있으며 회로별 보호 기능을 담당.' },
-            { id: 'w-arch8', term: '누전차단기(ELB)', definition: '전류 누설 감지 시 0.03초 내 자동 차단하는 안전 장치. 감전 및 화재 예방 목적.' },
-            { id: 'w-arch9', term: '접지공사', definition: '전기 기기의 금속 외함을 땅에 연결해 누전 전류를 안전하게 흘려보내는 공사.' }
+            { id: 'w-arch10', term: '데스리', definition: '발코니나 베란다 등의 난간' },
+            { id: 'w-arch11', term: '가구부찌', definition: '문틀이나 창문 주위의 틀인 문선' },
+            { id: 'w-arch12', term: '메지', definition: '타일이나 벽돌 사이의 이음새인 줄눈' },
+            { id: 'w-arch13', term: '우라', definition: '물건이나 작업의 뒤' }
           ]
         },
         {
-          id: 'st-arch4', name: '목공',
+          id: 'st-arch-site', name: '현장',
           words: [
-            { id: 'w-arch10', term: '경량철골(LGS)', definition: '얇은 아연도금 강판을 성형한 구조재. 칸막이·천장 틀 등 비내력벽 시공에 널리 사용.' },
-            { id: 'w-arch11', term: 'OSB 합판', definition: '나무 조각을 압축·접착한 구조용 합판. 내습성과 강도가 높아 벽체·바닥 하지재로 사용.' },
-            { id: 'w-arch12', term: '몰딩', definition: '벽과 천장, 벽과 바닥의 경계부를 마감하는 장식재. 걸레받이(베이스보드)·천장 몰딩으로 구분.' }
-          ]
-        },
-        {
-          id: 'st-arch5', name: '타일·미장',
-          words: [
-            { id: 'w-arch13', term: '줄눈(그라우팅)', definition: '타일과 타일 사이 틈새를 전용 재료로 메우는 작업. 방수·오염 방지 기능과 심미적 역할을 동시에 담당.' },
-            { id: 'w-arch14', term: '셀프레벨링', definition: '바닥 미장 시 자체 흐름으로 평탄면을 형성하는 특수 시멘트 재료. 수평 편차 보정에 활용.' },
-            { id: 'w-arch15', term: '타설', definition: '콘크리트나 몰탈을 거푸집 또는 바닥에 붓고 다져 굳히는 작업.' }
-          ]
-        },
-        {
-          id: 'st-arch6', name: '도배·마루',
-          words: [
-            { id: 'w-arch16', term: '초배지', definition: '도배지를 바르기 전 벽면 요철을 잡고 접착력을 높이기 위해 먼저 붙이는 기초 종이.' },
-            { id: 'w-arch17', term: '방습 필름(PE필름)', definition: '바닥 콘크리트 슬라브의 습기가 마루재로 전달되지 않도록 깔아주는 폴리에틸렌 시트.' },
-            { id: 'w-arch18', term: '클릭 마루(Lock 방식)', definition: '본드·못 없이 혀와 홈을 맞물려 시공하는 조립식 마루. 교체·해체가 용이.' }
-          ]
-        },
-        {
-          id: 'st-arch7', name: '조명·가구',
-          words: [
-            { id: 'w-arch19', term: '색온도(K)', definition: '광원의 따뜻하고 차가운 정도를 나타내는 단위(켈빈). 2700K는 따뜻한 주황빛, 6500K는 차가운 흰빛.' },
-            { id: 'w-arch20', term: '연색지수(CRI)', definition: '광원이 물체의 색을 얼마나 자연광에 가깝게 표현하는지 나타내는 수치. 100에 가까울수록 우수.' },
-            { id: 'w-arch21', term: '붙박이장(빌트인)', definition: '건물 구조에 맞춰 벽면 틈새에 고정·제작하는 수납 가구. 공간 효율이 높고 이사 시 철거 비용 발생.' }
+            { id: 'w-arch14', term: '함바', definition: '건설 현장이나 공사장 안에 마련된 임시 간이 식당' }
           ]
         }
       ]
@@ -292,46 +270,32 @@ const DEFAULT_DATA = {
     },
     {
       id: 'cat-it',
-      name: 'IT 개발',
+      name: 'IT',
       stages: [
         {
-          id: 'st-it1', name: '기획·설계',
+          id: 'st-it-work', name: '업무',
           words: [
-            { id: 'w-it1', term: '유저 스토리', definition: '사용자 관점에서 기능을 서술하는 요구사항 형식. "나는 [역할]로서 [기능]을 원한다. 왜냐하면 [이유]이기 때문이다" 구조.' },
-            { id: 'w-it2', term: 'ERD(개체-관계 다이어그램)', definition: '데이터베이스의 테이블(엔티티)과 관계를 시각화한 설계 다이어그램. 개발 전 DB 구조 합의의 기준.' },
-            { id: 'w-it3', term: '와이어프레임', definition: '색상·이미지 없이 레이아웃과 기능 배치만 표현한 UI 설계 초안. 개발 전 구조 검토 및 이해관계자 소통 용도.' }
+            { id: 'w-it1', term: '킥오프(Kick-off)', definition: '시작', example: '킥오프는 4월 3일입니다.(첫 술을 뜨는 건 4월 3일입니다.)' },
+            { id: 'w-it2', term: '애자일(Agile)', definition: '유연하고 반응성이 높은', example: '우리 조직은 애자일하게 운영할 거예요.' },
+            { id: 'w-it3', term: '린(Lean)', definition: '불필요한 낭비 요소를 제거하고, 빠르고 효율적으로 실행하는 것', example: '이 작업은 린하게 시작해보시죠.' },
+            { id: 'w-it4', term: '데일리 스크럼', definition: '일일 아침회의' },
+            { id: 'w-it5', term: '스프린트', definition: '업무 기간 단위' }
           ]
         },
         {
-          id: 'st-it2', name: '디자인·UI',
+          id: 'st-it-service', name: '서비스',
           words: [
-            { id: 'w-it4', term: '디자인 시스템', definition: '버튼·타이포·컬러 등 UI 구성요소를 규칙화한 컴포넌트 모음. 제품 전반의 일관성 확보와 협업 효율을 높임.' },
-            { id: 'w-it5', term: '접근성(a11y)', definition: '장애인·고령자 포함 모든 사용자가 서비스를 이용할 수 있도록 설계하는 원칙. WCAG 기준 준수 여부가 주요 지표.' },
-            { id: 'w-it6', term: '반응형 디자인', definition: '화면 크기(모바일·태블릿·데스크톱)에 따라 레이아웃이 유동적으로 변하는 웹 디자인 방식.' }
+            { id: 'w-it6', term: 'KPI(Key Performance Indicator)', definition: '성과측정방식' },
+            { id: 'w-it7', term: '리텐션(Retention)', definition: '유지', example: '리텐션이 떨어진다.(사용자가 금방 이탈한다.)' },
+            { id: 'w-it8', term: '페이드아웃(Phased-out/Faded-out)', definition: '특정 기술, 서비스, 하드웨어 또는 소프트웨어 기능의 지원 및 사용을 점진적으로 중단하고 퇴출시키는 과정', example: '이 서비스는 곧 페이드아웃 할 거예요.' }
           ]
         },
         {
-          id: 'st-it3', name: '프론트엔드',
+          id: 'st-it-business', name: '사업',
           words: [
-            { id: 'w-it7', term: 'CSR / SSR', definition: 'CSR(클라이언트 사이드 렌더링)은 브라우저에서 JS로 화면을 그리고, SSR(서버 사이드 렌더링)은 서버에서 완성된 HTML을 내려보내는 방식. SEO·초기 로딩 속도에 영향.' },
-            { id: 'w-it8', term: '번들링', definition: '여러 JS·CSS 파일을 하나(또는 소수)의 파일로 합치는 빌드 과정. Webpack·Vite 등이 대표 번들러.' },
-            { id: 'w-it9', term: '하이드레이션', definition: 'SSR로 생성된 정적 HTML에 JS를 붙여 인터랙티브하게 만드는 과정. 이 시점 이후 이벤트 핸들러가 동작.' }
-          ]
-        },
-        {
-          id: 'st-it4', name: '백엔드',
-          words: [
-            { id: 'w-it10', term: 'RESTful API', definition: 'HTTP 메서드(GET·POST·PUT·DELETE)와 URL로 자원을 표현하는 API 설계 원칙. 무상태성·균일한 인터페이스가 핵심.' },
-            { id: 'w-it11', term: '미들웨어', definition: '클라이언트 요청과 서버 응답 사이에서 인증·로깅·파싱 등을 처리하는 중간 소프트웨어 레이어.' },
-            { id: 'w-it12', term: 'ORM(객체-관계 매핑)', definition: '객체지향 코드로 SQL 없이 데이터베이스를 조작할 수 있게 해주는 추상화 계층. Prisma·TypeORM 등이 대표.' }
-          ]
-        },
-        {
-          id: 'st-it5', name: '배포·운영',
-          words: [
-            { id: 'w-it13', term: 'CI/CD', definition: '코드 변경 시 자동 빌드·테스트(CI)와 프로덕션 자동 배포(CD)를 통합한 파이프라인. 배포 주기 단축과 인적 오류 감소.' },
-            { id: 'w-it14', term: '컨테이너(Docker)', definition: '앱과 실행 환경을 이미지로 패키징해 어디서든 동일하게 실행되게 하는 가상화 기술. "내 로컬에선 됐는데" 문제 해소.' },
-            { id: 'w-it15', term: '롤백', definition: '새 배포 버전에 문제가 생겼을 때 이전 안정 버전으로 즉시 되돌리는 조치. 다운타임 최소화를 위한 필수 운영 전략.' }
+            { id: 'w-it9', term: '케파(Capacity)', definition: '작업 처리 능력, 수용량, 가용 가능한 리소스(자원), 여유.', example: '케파 충분해요?(리소스 충분해요?)' },
+            { id: 'w-it10', term: '피봇(Pivot)', definition: '사업이나 제품의 핵심 방향을 전환하는 것', example: '사용자 반응을 분석해 보니 현재 모델로는 성장하기 어려워 보여서 사업 방향을 피봇하기로 결정했어요.' },
+            { id: 'w-it11', term: '런웨이(Runway)', definition: '현재 보유한 현금으로 추가 투자나 수익 없이 회사를 운영할 수 있는 기간', example: '런웨이 5개월 남았어요.' }
           ]
         }
       ]
@@ -984,7 +948,8 @@ function renderAllWords(container) {
                 h('span', { class: 'tag' }, stage.name)
               )
             ),
-            h('div', { class: 'word-item-def', style: 'margin-top:4px' }, word.definition || '설명 없음')
+            h('div', { class: 'word-item-def', style: 'margin-top:4px' }, word.definition || '설명 없음'),
+            wordExample(word)
           )
         );
       });
@@ -1012,6 +977,12 @@ function renderAllWords(container) {
     h('div', { class: 'search-bar' }, h('span', { class: 'search-icon' }, '🔍'), inp),
     buildWordList()
   );
+}
+
+function wordExample(word) {
+  return word.example
+    ? h('div', { class: 'word-item-example' }, `"${word.example}"`)
+    : null;
 }
 
 function renderCategory(container) {
@@ -1048,10 +1019,6 @@ function renderCategory(container) {
 
   if (state.stageId === 'all') {
     const allCatWords = cat.stages.flatMap(s => s.words.map(w => ({ word: w, stage: s })));
-    wordsPanel.append(h('div', { class: 'words-panel-header' },
-      h('span', { class: 'words-panel-title' }, '전체'),
-      h('span', { class: 'words-count' }, `${allCatWords.length}개`)
-    ));
     if (allCatWords.length === 0) {
       wordsPanel.append(emptyState('📝', '아직 단어가 없습니다', '단어를 추가해 보세요'));
     } else {
@@ -1062,7 +1029,8 @@ function renderCategory(container) {
               h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, w.term),
               h('button', { class: 'tag tag-button', style: 'flex-shrink:0', onClick: () => selectStage(s.id) }, s.name)
             ),
-            h('div', { class: 'word-item-def', style: 'margin-top:4px' }, w.definition || '설명 없음')
+            h('div', { class: 'word-item-def', style: 'margin-top:4px' }, w.definition || '설명 없음'),
+            wordExample(w)
           )
         );
       });
@@ -1070,19 +1038,14 @@ function renderCategory(container) {
   } else if (!stage) {
     wordsPanel.append(emptyState('📂', '단계를 선택하세요', ''));
   } else {
-    const panelHeader = h('div', { class: 'words-panel-header' },
-      h('span', { class: 'words-panel-title' }, `${stage.name} 단어 목록`),
-      h('span', { class: 'words-count' }, `${stage.words.length}개`)
-    );
-    wordsPanel.append(panelHeader);
-
     if (stage.words.length === 0) {
       wordsPanel.append(emptyState('📝', '아직 단어가 없습니다', '위의 [+ 용어 추가] 버튼으로 첫 단어를 등록해 보세요'));
     } else {
       stage.words.forEach(w => {
         const item = h('div', { class: 'word-item' },
           h('div', { class: 'word-item-term' }, w.term),
-          h('div', { class: 'word-item-def' }, w.definition || '설명 없음')
+          h('div', { class: 'word-item-def' }, w.definition || '설명 없음'),
+          wordExample(w)
         );
         wordsPanel.append(item);
       });
