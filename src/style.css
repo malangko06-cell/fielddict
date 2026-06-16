@@ -24,6 +24,10 @@
   --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.16);
 }
 
+html {
+  overflow-y: scroll;
+}
+
 [data-theme="dark"] {
   --blue: #8ea2ff;
   --blue-light: #1e2a52;
@@ -47,6 +51,7 @@ body {
   color: var(--text);
   min-height: 100vh;
   line-height: 1.6;
+  scrollbar-gutter: stable;
 }
 
 /* ── Header ── */
@@ -537,12 +542,21 @@ textarea.form-input {
 .tag {
   border: 0;
   padding: 3px 11px;
-  background: var(--blue-light);
-  color: var(--blue);
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   font-family: inherit;
+}
+
+.tag-category {
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+.tag-stage {
+  background: var(--white);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
 }
 
 .tag-button {
@@ -550,9 +564,15 @@ textarea.form-input {
   transition: background 0.15s, color 0.15s;
 }
 
-.tag-button:hover {
+.tag-category.tag-button:hover {
   background: var(--blue);
   color: var(--white);
+}
+
+.tag-stage.tag-button:hover {
+  background: var(--bg);
+  color: var(--text);
+  border-color: var(--blue);
 }
 
 /* ── Sort bar ── */

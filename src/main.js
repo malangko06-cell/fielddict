@@ -13,7 +13,7 @@ const DEFAULT_DATA = {
           words: [
             { id: 'w-p1', term: '누끼', definition: '그림 등의 필요한 형태만 도려내는 이미지 추출 작업' },
             { id: 'w-p2', term: '도비라', definition: '책의 내지와 내지 사이에 삽입되는 소제목 페이지' },
-            { id: 'w-p3', term: '베다', definition: '남는 공간이 없도록 잉크를 100% 올리는 것, 농도나 명암없이 100% 잉크로 인쇄하는 부분' }
+            { id: 'w-p3', term: '베다/빼다', definition: '남는 공간이 없도록 잉크를 100% 올리는 것, 농도나 명암없이 100% 잉크로 인쇄하는 부분' }
           ]
         },
         {
@@ -170,54 +170,33 @@ const DEFAULT_DATA = {
     },
     {
       id: 'cat-video',
-      name: '영상/미디어 제작',
+      name: '방송',
       stages: [
         {
-          id: 'st-vid1', name: '기획·스크립트',
+          id: 'st-broadcast-planning', name: '기획',
           words: [
-            { id: 'w-vid1', term: '트리트먼트', definition: '영상의 전체 흐름과 연출 방향을 서술 형식으로 정리한 기획 문서. 정식 대본 이전 단계.' },
-            { id: 'w-vid2', term: '콘티(콘티뉴이티)', definition: '장면 구성을 그림과 텍스트로 순서대로 표현한 시각화 기획안. 감독·촬영·편집팀의 공통 지침서.' },
-            { id: 'w-vid3', term: '런닝타임(RT)', definition: '완성된 영상의 총 재생 시간. 납품 전 발주처 요구 사항에 맞게 준수해야 하는 핵심 스펙.' }
+            { id: 'w-vid1', term: '야마', definition: '이야기의 핵심, 주제, 가장 중요한 포인트', example: '이번 촬영분의 야마가 뭐야?' },
+            { id: 'w-vid2', term: '니쥬', definition: '서사를 이해하기 위한 밑밥, 복선, 도입부', example: '니쥬 없이 훅 들어오네.' },
+            { id: 'w-vid3', term: '오도시', definition: '클라이맥스, 감정이나 웃음이 가장 크게 터지는 지점', example: '여기가 오도시야.' },
+            { id: 'w-vid4', term: '나래비', definition: '특별한 구조 없이 장면만 나열한 상태', example: '이건 그냥 나래비잖아.' },
+            { id: 'w-vid5', term: '와꾸', definition: '이야기의 구조, 기획의 틀, 전체 프레임', example: '와꾸를 먼저 짜보자.' }
           ]
         },
         {
-          id: 'st-vid2', name: '촬영',
+          id: 'st-broadcast-directing', name: '연출',
           words: [
-            { id: 'w-vid4', term: '프레임레이트(fps)', definition: '1초에 몇 장의 정지 이미지를 촬영·재생하는지 나타내는 단위. 24fps는 영화, 60fps는 스포츠·유튜브에 주로 사용.' },
-            { id: 'w-vid5', term: '피사계심도(DoF)', definition: '사진·영상에서 초점이 맞아 선명하게 보이는 범위. 조리개를 열수록 심도가 얕아져 배경 흐림(보케) 효과 발생.' },
-            { id: 'w-vid6', term: '셔터스피드', definition: '카메라 센서가 빛에 노출되는 시간. 프레임레이트의 2배 분의 1 값이 자연스러운 모션 블러를 만드는 180도 룰의 기준.' }
+            { id: 'w-vid6', term: '시바이', definition: '웃음 포인트나 재미 요소', example: '시바이가 너무 없는데?' },
+            { id: 'w-vid7', term: '데꼬보꼬', definition: '장면에 재미나 변화를 주는 것', example: '데꼬보꼬가 좀 있어야 돼.' },
+            { id: 'w-vid8', term: '니마이', definition: '진지하고 정공법적인 분위기', example: '여긴 니마이로 가야 돼.' },
+            { id: 'w-vid9', term: '쌈마이', definition: '키치하고 B급스러운 분위기, 다소 저속한 웃음', example: '너무 쌈마이한데?' },
+            { id: 'w-vid10', term: '바레', definition: '스포일러, 미리 드러나면 안 되는 정보', example: '결과 바레 안 나게 해.' }
           ]
         },
         {
-          id: 'st-vid3', name: '조명·음향',
+          id: 'st-broadcast-shooting', name: '촬영',
           words: [
-            { id: 'w-vid7', term: '3점 조명', definition: '키 라이트·필 라이트·백 라이트 세 광원으로 피사체를 입체적으로 표현하는 기본 조명 세팅.' },
-            { id: 'w-vid8', term: 'ADR(대사 재녹음)', definition: '촬영 중 수음이 불량한 대사를 스튜디오에서 배우가 다시 녹음하는 작업. 더빙·더빙 후보정 포함.' },
-            { id: 'w-vid9', term: '팬텀파워(+48V)', definition: 'XLR 케이블을 통해 콘덴서 마이크에 공급하는 48V 직류 전원. 믹서·인터페이스에서 활성화 필요.' }
-          ]
-        },
-        {
-          id: 'st-vid4', name: '편집',
-          words: [
-            { id: 'w-vid10', term: 'J/L 컷', definition: '오디오와 비디오의 전환 타이밍을 어긋나게 하는 편집 기법. 다음 장면 소리가 먼저 시작(J컷) 또는 화면이 먼저 전환(L컷).' },
-            { id: 'w-vid11', term: '타임라인', definition: '편집 소프트웨어에서 영상·오디오 클립을 시간축에 배열하는 작업 공간. 트랙 개수와 순서가 최종 출력물 결정.' },
-            { id: 'w-vid12', term: '프록시 편집', definition: '원본 고해상도 파일 대신 저해상도 프록시 파일로 편집 후 최종 출력 시 원본으로 재연결하는 방식. 시스템 부하 감소.' }
-          ]
-        },
-        {
-          id: 'st-vid5', name: '색보정·CG',
-          words: [
-            { id: 'w-vid13', term: 'LUT(룩업테이블)', definition: '입력 색상값을 원하는 출력 색상값으로 변환하는 색상 매핑 파일. 카메라 로그 감마를 표준 색공간으로 변환하거나 영화적 룩을 적용.' },
-            { id: 'w-vid14', term: '크로마키(그린스크린)', definition: '특정 색상을 투명 처리하는 합성 기법. 초록(또는 파랑) 배경을 제거하고 원하는 배경으로 대체.' },
-            { id: 'w-vid15', term: '모션 그래픽', definition: '그래픽 디자인 요소에 움직임을 부여한 영상 콘텐츠. 타이틀·인포그래픽·자막 애니메이션 등이 해당.' }
-          ]
-        },
-        {
-          id: 'st-vid6', name: '납품·송출',
-          words: [
-            { id: 'w-vid16', term: '코덱(Codec)', definition: '영상 데이터를 압축·복원하는 알고리즘. H.264·H.265(HEVC)·ProRes 등이 있으며 납품처 요건에 맞게 선택.' },
-            { id: 'w-vid17', term: '비트레이트(Bitrate)', definition: '단위 시간당 처리되는 데이터 양(bps). 높을수록 화질이 좋아지나 파일 크기 증가. 플랫폼별 권장 값 존재.' },
-            { id: 'w-vid18', term: '마스터 파일', definition: '최종 납품 또는 보관용으로 최고 품질로 출력한 원본 파일. 이후 다양한 포맷 파생의 기준본.' }
+            { id: 'w-vid11', term: '데모찌', definition: '삼각대 없이 손으로 직접 들고 촬영하는 핸드헬드 촬영', example: '데모찌로 갈게.' },
+            { id: 'w-vid12', term: '데마에', definition: '카메라 가까이에 피사체를 두어 입체감을 만드는 촬영 기법', example: '데마에 하나 걸고 찍자.' }
           ]
         }
       ]
@@ -532,46 +511,32 @@ const DEFAULT_DATA = {
     },
     {
       id: 'cat-ad',
-      name: '광고·마케팅',
+      name: '광고',
       stages: [
         {
-          id: 'st-ad1', name: '매체 기획',
+          id: 'st-ad-planning', name: '기획',
           words: [
-            { id: 'w-ad1', term: '미디어 믹스', definition: 'TV·디지털·옥외 등 복수의 광고 매체를 조합해 목표 도달 효율을 극대화하는 매체 전략.' },
-            { id: 'w-ad2', term: 'GRP(시청률 합계)', definition: 'TV 광고에서 방영 기간 동안 누적된 시청률의 합. GRP 100은 타겟 집단 전체가 평균 1회 노출됐음을 의미.' },
-            { id: 'w-ad3', term: '임프레션', definition: '광고가 사용자 화면에 노출된 총 횟수. 클릭 여부와 무관하며 인지도 캠페인의 성과 측정 기준.' }
+            { id: 'w-ad1', term: '히뜩하다', definition: '기발하고 재미있는, 새롭고 신선한 것을 지칭할 때 사용' },
+            { id: 'w-ad2', term: '와꾸', definition: '이야기의 구조, 기획의 틀, 전체 프레임', example: '와꾸를 먼저 짜보자.' },
+            { id: 'w-ad3', term: '부러뜨리다', definition: '여러 가지 아이디어 중 최종안을 결정하다' }
           ]
         },
         {
-          id: 'st-ad2', name: '소재 제작',
+          id: 'st-ad-production', name: '제작/편집',
           words: [
-            { id: 'w-ad4', term: '크리에이티브 브리프', definition: '광고 제작 방향을 압축한 핵심 기획서. 타겟·메시지·톤&매너·KPI를 한 장으로 요약해 제작팀과 공유.' },
-            { id: 'w-ad5', term: 'CTA(행동 유도 문구)', definition: '사용자에게 특정 행동(구매·회원가입·다운로드 등)을 유도하는 광고 문구. 버튼 문구·카피의 전환율에 직접 영향.' },
-            { id: 'w-ad6', term: 'A/B 테스트', definition: '두 가지 소재(A·B)를 동시에 집행해 클릭률·전환율을 비교 측정, 성과 우수 소재를 선택하는 최적화 방식.' }
+            { id: 'w-ad4', term: '바리치다', definition: 'Variation하다의 줄임말. 하나의 소재를 다양한 버전으로 만드는 것' },
+            { id: 'w-ad5', term: '커트바리', definition: '콘티를 컷 바이 컷으로 나눠서 구성한다는 의미' },
+            { id: 'w-ad6', term: '닦는다', definition: '영상의 색감이나 질감을 다듬거나, 아이디어를 더욱 개선한다는 뜻' },
+            { id: 'w-ad7', term: '오사마리', definition: '최종적인 정리 과정' }
           ]
         },
         {
-          id: 'st-ad3', name: '매체 집행',
+          id: 'st-ad-design', name: '디자인/연출',
           words: [
-            { id: 'w-ad7', term: 'CPM(1000회 노출당 비용)', definition: '광고 1000회 노출에 드는 비용. 인지도·도달 목적 캠페인의 효율 비교 지표.' },
-            { id: 'w-ad8', term: 'CPC(클릭당 비용)', definition: '광고 클릭 1회에 지불하는 비용. 퍼포먼스 마케팅에서 트래픽·전환 최적화 캠페인의 핵심 입찰 단위.' },
-            { id: 'w-ad9', term: '리타겟팅', definition: '자사 웹사이트나 앱을 방문한 사용자를 식별해 다른 매체에서 재노출하는 광고 방식. 구매 전환율 제고에 효과적.' }
-          ]
-        },
-        {
-          id: 'st-ad4', name: '성과 분석',
-          words: [
-            { id: 'w-ad10', term: 'ROAS(광고비 대비 매출)', definition: '광고 집행으로 발생한 매출을 광고비로 나눈 값. ROAS 300%는 광고비 1원당 3원의 매출을 의미.' },
-            { id: 'w-ad11', term: 'CTR(클릭률)', definition: '광고 노출 대비 클릭 수의 비율. 소재·타겟팅의 관련성을 나타내는 지표로 CTR이 높을수록 효율적인 소재.' },
-            { id: 'w-ad12', term: '어트리뷰션', definition: '전환(구매·가입 등)이 발생했을 때 어떤 광고 접점이 기여했는지 공헌도를 분배하는 분석 방법론.' }
-          ]
-        },
-        {
-          id: 'st-ad5', name: '정산·보고',
-          words: [
-            { id: 'w-ad13', term: '집행 보고서', definition: '캠페인 종료 후 노출·클릭·전환·비용 등 주요 수치를 정리해 광고주에게 제출하는 결과 보고 문서.' },
-            { id: 'w-ad14', term: '대행 수수료(Agency Fee)', definition: '광고 기획·운영·보고 서비스에 대해 광고주가 대행사에 지급하는 수수료. 통상 매체비의 10~20% 또는 정액으로 책정.' },
-            { id: 'w-ad15', term: '인보이스(Invoice)', definition: '광고 집행 후 대행사가 매체비·제작비·수수료를 항목별로 명시해 발행하는 세금계산서 전 단계 청구 문서.' }
+            { id: 'w-ad8', term: '있어빌리티하다', definition: '있어 보인다 + Ability의 합성어. 광고주가 광고를 마음에 들어할 것 같다. 있어보이게 만든다.' },
+            { id: 'w-ad9', term: '데꼬보꼬', definition: '장면에 재미나 변화를 주는 것', example: '데꼬보꼬가 좀 있어야 돼.' },
+            { id: 'w-ad10', term: '히까리', definition: '빛. 보통 자막에 빛이 흐르는 듯한 효과를 줄 때 많이 사용', example: '엔딩 로고에 히까리 좀 주세요' },
+            { id: 'w-ad11', term: '구다리', definition: '구역 혹은 영역', example: '거기 카피 구다리 좀 키워봐' }
           ]
         }
       ]
@@ -709,6 +674,18 @@ function goCategory(catId) {
 }
 
 function selectStage(stageId) {
+  state.stageId = stageId;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function goCategoryStage(catId, stageId) {
+  const cat = state.data.categories.find(c => c.id === catId);
+  if (!cat) return;
+  cat.views = (cat.views ?? 0) + 1;
+  save();
+  state.view = 'category';
+  state.categoryId = catId;
   state.stageId = stageId;
   render();
   window.scrollTo(0, 0);
@@ -874,31 +851,48 @@ function renderAllWords(container) {
   const query = state.searchQuery.toLowerCase().trim();
   const filterCatId = state.allWordsFilterCat;
 
-  let allWords = [];
+  let wordEntries = [];
   for (const cat of state.data.categories) {
     if (filterCatId && cat.id !== filterCatId) continue;
     for (const stage of cat.stages) {
       for (const word of stage.words) {
-        allWords.push({ word, cat, stage });
+        wordEntries.push({ word, cat, stage });
       }
     }
   }
   if (query) {
-    allWords = allWords.filter(({ word }) =>
+    wordEntries = wordEntries.filter(({ word }) =>
       word.term.toLowerCase().includes(query) ||
-      word.definition.toLowerCase().includes(query)
+      word.definition.toLowerCase().includes(query) ||
+      (word.example ?? '').toLowerCase().includes(query)
     );
   }
   if (state.allWordsSortBy === 'recent') {
-    allWords.sort((a, b) => {
+    wordEntries.sort((a, b) => {
       const ta = parseInt(a.word.id.split('-')[1]) || 0;
       const tb = parseInt(b.word.id.split('-')[1]) || 0;
       return tb - ta;
     });
   } else if (state.allWordsSortBy === 'popular') {
-    allWords.sort((a, b) => (b.word.views ?? 0) - (a.word.views ?? 0));
+    wordEntries.sort((a, b) => (b.word.views ?? 0) - (a.word.views ?? 0));
   } else {
-    allWords.sort((a, b) => a.word.term.localeCompare(b.word.term, 'ko'));
+    wordEntries.sort((a, b) => a.word.term.localeCompare(b.word.term, 'ko'));
+  }
+
+  const groupedWords = [];
+  const groupedByTerm = new Map();
+  for (const entry of wordEntries) {
+    const key = entry.word.term.trim().toLowerCase();
+    const group = groupedByTerm.get(key);
+    if (!group) {
+      const nextGroup = { word: entry.word, contexts: [{ cat: entry.cat, stage: entry.stage }] };
+      groupedByTerm.set(key, nextGroup);
+      groupedWords.push(nextGroup);
+      continue;
+    }
+    if (!group.contexts.some(context => context.cat.id === entry.cat.id && context.stage.id === entry.stage.id)) {
+      group.contexts.push({ cat: entry.cat, stage: entry.stage });
+    }
   }
 
   const buildSortBar = () => {
@@ -932,20 +926,28 @@ function renderAllWords(container) {
     panel.append(
       h('div', { class: 'words-panel-header' },
         h('span', { class: 'words-panel-title' }, '단어 목록'),
-        h('span', { class: 'words-count' }, `${allWords.length}개`)
+        h('span', { class: 'words-count' }, `${groupedWords.length}개`)
       )
     );
-    if (allWords.length === 0) {
+    if (groupedWords.length === 0) {
       panel.append(emptyState('📭', '단어가 없습니다', query ? '검색어를 바꿔보세요' : '단어를 추가해 보세요'));
     } else {
-      allWords.forEach(({ word, cat, stage }) => {
+      groupedWords.forEach(({ word, contexts }) => {
         panel.append(
           h('div', { class: 'word-item' },
             h('div', { style: 'display:flex;align-items:flex-start;justify-content:space-between;gap:12px' },
               h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, word.term),
               h('div', { style: 'display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end' },
-                h('button', { class: 'tag tag-button', onClick: () => goCategory(cat.id) }, cat.name),
-                h('span', { class: 'tag' }, stage.name)
+                contexts.flatMap(({ cat, stage }) =>
+                  [
+                    h('button', { class: 'tag tag-category tag-button', onClick: () => goCategory(cat.id) }, cat.name),
+                    h('button', {
+                      class: 'tag tag-stage tag-button',
+                      title: `${cat.name} > ${stage.name}`,
+                      onClick: () => goCategoryStage(cat.id, stage.id)
+                    }, stage.name)
+                  ]
+                )
               )
             ),
             h('div', { class: 'word-item-def', style: 'margin-top:4px' }, word.definition || '설명 없음'),
@@ -1027,7 +1029,7 @@ function renderCategory(container) {
           h('div', { class: 'word-item' },
             h('div', { style: 'display:flex;align-items:flex-start;justify-content:space-between;gap:12px' },
               h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, w.term),
-              h('button', { class: 'tag tag-button', style: 'flex-shrink:0', onClick: () => selectStage(s.id) }, s.name)
+              h('button', { class: 'tag tag-stage tag-button', style: 'flex-shrink:0', onClick: () => selectStage(s.id) }, s.name)
             ),
             h('div', { class: 'word-item-def', style: 'margin-top:4px' }, w.definition || '설명 없음'),
             wordExample(w)
