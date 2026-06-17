@@ -411,6 +411,33 @@ body {
   margin-bottom: 4px;
 }
 
+.word-sense {
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.word-sense + .word-sense {
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.word-sense-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 4px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  max-width: 52%;
+}
+
+.word-sense-body {
+  min-width: 0;
+}
+
 .word-item-def {
   font-size: 13px;
   color: var(--text-muted);
@@ -776,6 +803,16 @@ textarea.form-input {
   /* Word items */
   .word-item {
     padding: 13px 16px;
+  }
+
+  .word-sense {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .word-sense-tags {
+    max-width: 100%;
+    align-self: flex-end;
   }
 
   /* Modal */

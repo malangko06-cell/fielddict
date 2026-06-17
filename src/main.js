@@ -196,7 +196,42 @@ const DEFAULT_DATA = {
           id: 'st-broadcast-shooting', name: '촬영',
           words: [
             { id: 'w-vid11', term: '데모찌', definition: '삼각대 없이 손으로 직접 들고 촬영하는 핸드헬드 촬영', example: '데모찌로 갈게.' },
-            { id: 'w-vid12', term: '데마에', definition: '카메라 가까이에 피사체를 두어 입체감을 만드는 촬영 기법', example: '데마에 하나 걸고 찍자.' }
+            { id: 'w-vid12', term: '데마이/데마에', definition: '걸쳐 찍기. 카메라 가까이에 피사체를 두어 입체감을 만드는 촬영 기법. 또는 카메라 앵글 앞쪽에 걸리는 것', example: '소품을 데마이에 걸까요? / 데마에 하나 걸고 찍자.' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'cat-film',
+      name: '영화',
+      stages: [
+        {
+          id: 'st-film-shooting', name: '촬영',
+          words: [
+            { id: 'w-film1', term: '누끼', definition: '모아 찍기. 앵글이 같은 커트를 하나로 모아서 한꺼번에 촬영하는 것', example: '오늘 누끼 따자(몰아서 찍자)' },
+            { id: 'w-film2', term: '데모찌', definition: '삼각대 없이 손으로 직접 들고 촬영하는 핸드헬드 촬영', example: '데모찌로 갈게.' },
+            { id: 'w-film3', term: '데마이/데마에', definition: '걸쳐 찍기. 카메라 가까이에 피사체를 두어 입체감을 만드는 촬영 기법. 또는 카메라 앵글 앞쪽에 걸리는 것', example: '소품을 데마이에 걸까요? / 데마에 하나 걸고 찍자.' },
+            { id: 'w-film4', term: '두레나시', definition: '재촬영' }
+          ]
+        },
+        {
+          id: 'st-film-site', name: '현장',
+          words: [
+            { id: 'w-film5', term: '시마이', definition: '작업의 마감이나 끝' },
+            { id: 'w-film6', term: '니쥬', definition: '깔판, 마룻바닥. 바닥에 추가 단을 깔고, 그 위에 세트를 지을 때 바닥에 깔린 마루를 지칭함' },
+            { id: 'w-film7', term: '데꼬보꼬', definition: '요철. 울퉁불퉁. 울룩불룩. 평평한 작업이 필요한 부분' },
+            { id: 'w-film8', term: '바라시', definition: '촬영 종료 후 짐을 챙기는 것. 촬영장에서 철수하는 것' },
+            { id: 'w-film9', term: '오사마이/오사마리', definition: '마지막 촬영' },
+            { id: 'w-film10', term: '혼방', definition: '리허설이 아닌 실제 본 촬영 시작' },
+            { id: 'w-film11', term: '히로시', definition: '앵글을 잡거나 배우의 동선을 미리 표시할 때 바닥에 붙이는 마킹(청테이프)' }
+          ]
+        },
+        {
+          id: 'st-film-actor', name: '배우',
+          words: [
+            { id: 'w-film12', term: '가께모치', definition: '배우나 감독이 동시에 두 개 이상의 작품에 참여하는 것.' },
+            { id: 'w-film13', term: '가에다마', definition: '대역' },
+            { id: 'w-film14', term: '니마이', definition: '주연급 연기자, 일류 배우' }
           ]
         }
       ]
@@ -527,7 +562,7 @@ const DEFAULT_DATA = {
             { id: 'w-ad4', term: '바리치다', definition: 'Variation하다의 줄임말. 하나의 소재를 다양한 버전으로 만드는 것' },
             { id: 'w-ad5', term: '커트바리', definition: '콘티를 컷 바이 컷으로 나눠서 구성한다는 의미' },
             { id: 'w-ad6', term: '닦는다', definition: '영상의 색감이나 질감을 다듬거나, 아이디어를 더욱 개선한다는 뜻' },
-            { id: 'w-ad7', term: '오사마리', definition: '최종적인 정리 과정' }
+            { id: 'w-ad7', term: '오사마이/오사마리', definition: '최종적인 정리 과정' }
           ]
         },
         {
@@ -591,6 +626,8 @@ const DEFAULT_DATA = {
 };
 
 // ── State ──────────────────────────────────────────────────────────────────
+const VIEW_STATE_KEY = 'fielddict:viewState';
+
 async function loadData() {
   try {
     const { data: row, error } = await supabase
@@ -620,6 +657,50 @@ let state = {
   allWordsSortBy: 'alpha',
   theme: localStorage.getItem('theme') || 'light',
 };
+
+function persistViewState() {
+  localStorage.setItem(VIEW_STATE_KEY, JSON.stringify({
+    view: state.view,
+    categoryId: state.categoryId,
+    stageId: state.stageId,
+    searchQuery: state.searchQuery,
+    sortBy: state.sortBy,
+    allWordsFilterCat: state.allWordsFilterCat,
+    allWordsSortBy: state.allWordsSortBy,
+  }));
+}
+
+function restoreViewState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(VIEW_STATE_KEY));
+    if (!saved || !['home', 'all-words', 'category'].includes(saved.view)) return;
+
+    state.view = saved.view;
+    state.categoryId = saved.categoryId ?? null;
+    state.stageId = saved.stageId ?? null;
+    state.searchQuery = saved.searchQuery ?? '';
+    state.sortBy = saved.sortBy ?? 'alpha';
+    state.allWordsFilterCat = saved.allWordsFilterCat ?? null;
+    state.allWordsSortBy = saved.allWordsSortBy ?? 'alpha';
+
+    if (state.view === 'category') {
+      const cat = state.data.categories.find(c => c.id === state.categoryId);
+      if (!cat) {
+        state.view = 'home';
+        state.categoryId = null;
+        state.stageId = null;
+      } else if (state.stageId !== 'all' && !cat.stages.some(s => s.id === state.stageId)) {
+        state.stageId = cat.stages.length > 0 ? 'all' : null;
+      }
+    }
+
+    if (state.allWordsFilterCat && !state.data.categories.some(c => c.id === state.allWordsFilterCat)) {
+      state.allWordsFilterCat = null;
+    }
+  } catch {
+    localStorage.removeItem(VIEW_STATE_KEY);
+  }
+}
 
 function applyTheme() {
   document.documentElement.dataset.theme = state.theme;
@@ -718,6 +799,7 @@ function render() {
   const headerActions = document.getElementById('header-actions');
   const headerNav = document.getElementById('header-nav');
 
+  persistViewState();
   app.innerHTML = '';
   headerActions.innerHTML = '';
 
@@ -759,6 +841,7 @@ function render() {
 }
 
 function renderHome(container) {
+  persistViewState();
   const cats = state.data.categories;
   const query = state.searchQuery.toLowerCase().trim();
 
@@ -848,6 +931,7 @@ function renderHome(container) {
 }
 
 function renderAllWords(container) {
+  persistViewState();
   const query = state.searchQuery.toLowerCase().trim();
   const filterCatId = state.allWordsFilterCat;
 
@@ -885,13 +969,24 @@ function renderAllWords(container) {
     const key = entry.word.term.trim().toLowerCase();
     const group = groupedByTerm.get(key);
     if (!group) {
-      const nextGroup = { word: entry.word, contexts: [{ cat: entry.cat, stage: entry.stage }] };
+      const nextGroup = {
+        term: entry.word.term,
+        senses: [{ word: entry.word, contexts: [{ cat: entry.cat, stage: entry.stage }] }]
+      };
       groupedByTerm.set(key, nextGroup);
       groupedWords.push(nextGroup);
       continue;
     }
-    if (!group.contexts.some(context => context.cat.id === entry.cat.id && context.stage.id === entry.stage.id)) {
-      group.contexts.push({ cat: entry.cat, stage: entry.stage });
+    const senseKey = `${entry.word.definition ?? ''}::${entry.word.example ?? ''}`.trim().toLowerCase();
+    let sense = group.senses.find(item =>
+      `${item.word.definition ?? ''}::${item.word.example ?? ''}`.trim().toLowerCase() === senseKey
+    );
+    if (!sense) {
+      sense = { word: entry.word, contexts: [] };
+      group.senses.push(sense);
+    }
+    if (!sense.contexts.some(context => context.cat.id === entry.cat.id && context.stage.id === entry.stage.id)) {
+      sense.contexts.push({ cat: entry.cat, stage: entry.stage });
     }
   }
 
@@ -932,33 +1027,36 @@ function renderAllWords(container) {
     if (groupedWords.length === 0) {
       panel.append(emptyState('📭', '단어가 없습니다', query ? '검색어를 바꿔보세요' : '단어를 추가해 보세요'));
     } else {
-      groupedWords.forEach(({ word, contexts }) => {
+      groupedWords.forEach(({ term, senses }) => {
         panel.append(
           h('div', { class: 'word-item' },
-            h('div', { style: 'display:flex;align-items:flex-start;justify-content:space-between;gap:12px' },
-              h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, word.term),
-              h('div', { style: 'display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end' },
-                contexts.flatMap(({ cat, stage }) =>
-                  [
-                    h('button', { class: 'tag tag-category tag-button', onClick: () => goCategory(cat.id) }, cat.name),
-                    h('button', {
-                      class: 'tag tag-stage tag-button',
-                      title: `${cat.name} > ${stage.name}`,
-                      onClick: () => goCategoryStage(cat.id, stage.id)
-                    }, stage.name)
-                  ]
+            h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, term),
+            senses.map(({ word, contexts }, senseIndex) =>
+              h('div', { class: 'word-sense' },
+                h('div', { class: 'word-sense-body' },
+                  h('div', { class: 'word-item-def' }, (senses.length > 1 ? `${senseIndex + 1}. ` : '') + (word.definition || '설명 없음')),
+                  wordExample(word)
+                ),
+                h('div', { class: 'word-sense-tags' },
+                  contexts.flatMap(({ cat, stage }) =>
+                    [
+                      h('button', { class: 'tag tag-category tag-button', onClick: () => goCategory(cat.id) }, cat.name),
+                      h('button', {
+                        class: 'tag tag-stage tag-button',
+                        title: `${cat.name} > ${stage.name}`,
+                        onClick: () => goCategoryStage(cat.id, stage.id)
+                      }, stage.name)
+                    ]
+                  )
                 )
               )
-            ),
-            h('div', { class: 'word-item-def', style: 'margin-top:4px' }, word.definition || '설명 없음'),
-            wordExample(word)
+            )
           )
         );
       });
     }
     return panel;
   };
-
   if (container.querySelector('.search-bar')) {
     container.querySelector('.sort-bar')?.replaceWith(buildSortBar());
     container.querySelector('.all-words-filter-bar')?.replaceWith(buildFilterBar());
@@ -988,6 +1086,7 @@ function wordExample(word) {
 }
 
 function renderCategory(container) {
+  persistViewState();
   const cat = state.data.categories.find(c => c.id === state.categoryId);
   if (!cat) { goHome(); return; }
 
@@ -1361,6 +1460,7 @@ async function init() {
   document.getElementById('app').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:200px;color:var(--text-faint);font-size:15px">불러오는 중...</div>';
 
   state.data = await loadData();
+  restoreViewState();
   render();
 
   // 다른 사용자가 데이터 변경하면 실시간 반영
