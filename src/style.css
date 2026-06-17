@@ -175,6 +175,33 @@ body {
   letter-spacing: -0.5px;
 }
 
+.home-summary {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.summary-stat {
+  position: relative;
+  white-space: nowrap;
+}
+
+.summary-stat + .summary-stat::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  width: 1px;
+  height: 11px;
+  background: var(--text-faint);
+  transform: translateY(-50%);
+}
+
 .page-actions {
   display: flex;
   gap: 8px;
@@ -765,6 +792,17 @@ textarea.form-input {
 
   .page-title {
     font-size: 21px;
+  }
+
+  .home-summary {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 12px;
+    font-size: 12.5px;
+  }
+
+  .summary-stat + .summary-stat::before {
+    left: -6px;
   }
 
   /* Category grid */
