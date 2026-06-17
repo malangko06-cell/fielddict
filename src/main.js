@@ -20,7 +20,7 @@ const DEFAULT_DATA = {
           id: 'st-p2',
           name: '인쇄/제본',
           words: [
-            { id: 'w-p4', term: '하리꼬미(터잡기)', definition: '인쇄 전 인쇄면을 큰 용지에 배치하는 작업' },
+            { id: 'w-p4', term: '하리꼬미', definition: '터잡기. 인쇄 전 인쇄면을 큰 용지에 배치하는 작업' },
             { id: 'w-p5', term: '베라제본', definition: '낱장으로 된 인쇄물의 제본 방식. 주로 디지털 인쇄에서 사용된다. (ex. 캘린더)' },
             { id: 'w-p6', term: '돔보', definition: '4도(4COLOR)혹은 2색 이상 인쇄할 때, 각 색판의 가늠을 잡기 위해 삽입하는 인쇄판 짧은 변 중앙에 가늠용 표' }
           ]
@@ -78,46 +78,35 @@ const DEFAULT_DATA = {
     },
     {
       id: 'cat-law',
-      name: '법률',
+      name: '법조계',
       stages: [
         {
-          id: 'st-law1', name: '계약',
+          id: 'st-law-court', name: '법원',
           words: [
-            { id: 'w-law1', term: '청약과 승낙', definition: '계약 성립의 두 요소. 일방의 청약(계약 제안)에 상대방이 승낙해야 계약이 유효하게 성립.' },
-            { id: 'w-law2', term: '위약금', definition: '계약 불이행 시 지급하기로 미리 약정한 손해배상액. 손해배상액 예정 또는 위약벌로 구분.' },
-            { id: 'w-law3', term: '계약해제·해지', definition: '해제는 계약 소급 소멸(원상회복 의무 발생), 해지는 장래에 대해서만 효력 소멸. 계속적 계약에서 구분 중요.' }
+            { id: 'w-law1', term: '몸배석', definition: '다른 판사가 자리를 비웠을 때 대신 재판부에 들어가는 배석판사' },
+            { id: 'w-law2', term: '장날', definition: '재판 기일이 잡혀 실제 재판이 열리는 날' },
+            { id: 'w-law3', term: '납품', definition: '배석판사가 작성한 판결문 초안이나 검토 의견을 재판장에게 제출하는 것' },
+            { id: 'w-law4', term: '벙커', definition: '매우 깐깐하고 엄격한 부장판사나 재판장' },
+            { id: 'w-law5', term: '깡치(깡치사건)', definition: '기록이 많고 복잡하며 처리하기 어려운 사건' },
+            { id: 'w-law6', term: '좌배석 / 우배석', definition: '재판장 왼쪽·오른쪽에 앉는 배석판사를 구분하는 말' }
           ]
         },
         {
-          id: 'st-law2', name: '부동산',
+          id: 'st-law-prosecution', name: '검찰',
           words: [
-            { id: 'w-law4', term: '근저당권', definition: '채권 최고액을 한도로 장래의 불특정 채권을 담보하는 담보물권. 대출 시 은행이 설정하는 가장 일반적 담보 방식.' },
-            { id: 'w-law5', term: '전세권', definition: '전세금을 지급하고 타인 부동산을 용도에 맞게 사용·수익할 수 있는 물권. 등기해야 대항력 발생.' },
-            { id: 'w-law6', term: '등기부등본', definition: '부동산의 소유권·권리관계를 공시하는 공문서. 표제부·갑구(소유권)·을구(제한물권)로 구성.' }
+            { id: 'w-law7', term: '프로', definition: '검사들끼리 서로를 부르는 호칭. "○○프로"처럼 사용한다' },
+            { id: 'w-law8', term: '회사', definition: '검찰 조직을 내부적으로 지칭하는 표현. "회사 입장에서는..."처럼 쓰인다' },
+            { id: 'w-law9', term: '금초', definition: '갓 임용된 초임 검사' },
+            { id: 'w-law10', term: '2학년 검사 / 3학년 검사', definition: '인사이동 횟수에 따라 경력을 구분하는 말' }
           ]
         },
         {
-          id: 'st-law3', name: '노동',
+          id: 'st-law-firm', name: '로펌',
           words: [
-            { id: 'w-law7', term: '포괄임금제', definition: '연장·야간·휴일 수당을 월급에 일괄 포함해 지급하는 임금 약정 방식. 남용 시 위법 판정 가능.' },
-            { id: 'w-law8', term: '부당해고', definition: '정당한 이유나 절차 없이 근로자를 해고하는 행위. 노동위원회에 구제신청 가능, 복직 또는 금전보상 명령.' },
-            { id: 'w-law9', term: '취업규칙', definition: '10인 이상 사업장에서 사용자가 작성하는 근로 조건 규정 문서. 근로자 과반수 동의 없이 불이익 변경 불가.' }
-          ]
-        },
-        {
-          id: 'st-law4', name: '소송·분쟁',
-          words: [
-            { id: 'w-law10', term: '소장', definition: '원고가 법원에 제출하는 소 제기 서면. 당사자·청구취지·청구원인을 기재하며 이로써 소송이 개시.' },
-            { id: 'w-law11', term: '변론기일', definition: '법정에서 양 당사자가 주장·증거를 제출하고 판사가 심리하는 공개 기일.' },
-            { id: 'w-law12', term: '강제집행', definition: '확정 판결 등 집행권원에 기해 국가가 강제력으로 채권자의 권리를 실현시키는 절차. 재산 압류·경매 등.' }
-          ]
-        },
-        {
-          id: 'st-law5', name: '상속·가족',
-          words: [
-            { id: 'w-law13', term: '법정상속분', definition: '유언 없이 사망 시 민법이 정한 상속 비율. 배우자 1.5, 자녀 각 1 등 관계에 따라 차등 배분.' },
-            { id: 'w-law14', term: '유류분', definition: '유언에도 불구하고 상속인이 최소한 받을 수 있도록 법이 보장한 상속분. 침해 시 반환청구 가능.' },
-            { id: 'w-law15', term: '협의분할', definition: '상속인 전원의 합의로 상속재산을 나누는 방법. 법정상속분과 다르게 분할 가능하며 협의서 작성 필요.' }
+            { id: 'w-law11', term: '변호사 쇼핑', definition: '의뢰인이 여러 변호사를 만나며 자신에게 유리한 사람을 찾는 행위' },
+            { id: 'w-law12', term: '블랙', definition: '근무 환경이 좋지 않은 법률사무소' },
+            { id: 'w-law13', term: '찍새', definition: '사건 수임 영업을 주로 하는 변호사' },
+            { id: 'w-law14', term: '딱새', definition: '서면 작성이나 실무를 주로 담당하는 변호사' }
           ]
         }
       ]
@@ -232,6 +221,42 @@ const DEFAULT_DATA = {
             { id: 'w-film12', term: '가께모치', definition: '배우나 감독이 동시에 두 개 이상의 작품에 참여하는 것.' },
             { id: 'w-film13', term: '가에다마', definition: '대역' },
             { id: 'w-film14', term: '니마이', definition: '주연급 연기자, 일류 배우' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'cat-press',
+      name: '언론',
+      stages: [
+        {
+          id: 'st-press-reporting', name: '취재/보도',
+          words: [
+            { id: 'w-press1', term: '물 먹었다', definition: '경쟁사에 특종 뺏김' },
+            { id: 'w-press2', term: '킬(kill)', definition: '기사 송고 직전 취소' },
+            { id: 'w-press3', term: '데스크 컷', definition: '편집장이 기사 삭제' },
+            { id: 'w-press4', term: '라인 탔다', definition: '내부 승인 받음' }
+          ]
+        },
+        {
+          id: 'st-press-article', name: '기사',
+          words: [
+            { id: 'w-press5', term: '스트레이트', definition: '사실 전달 중심 기사' },
+            { id: 'w-press6', term: '피처', definition: '심층·스토리형 기사' },
+            { id: 'w-press7', term: '탑', definition: '지면/메인 최상단 기사' },
+            { id: 'w-press8', term: '사이드', definition: '보조 기사' },
+            { id: 'w-press9', term: '리드', definition: '기사 첫 문장' },
+            { id: 'w-press10', term: '꼬리', definition: '기사 마지막 문장' }
+          ]
+        },
+        {
+          id: 'st-press-field', name: '취재 현장',
+          words: [
+            { id: 'w-press11', term: '온', definition: '온더레코드. 언론이나 공식적인 자리에서 발언자가 자신의 이름과 신분을 밝히고, 기록과 보도를 허락하여 공식적으로 하는 발언' },
+            { id: 'w-press12', term: '오프', definition: '오프더레코드. 보도 금지, 비공개 발언' },
+            { id: 'w-press13', term: '엠바고', definition: '보도 시점 제한' },
+            { id: 'w-press14', term: '사쓰마와리(마와리)', definition: '수습기자들이 경찰서를 돌며 사건사고를 수집하는 것' },
+            { id: 'w-press15', term: '하리꼬미', definition: '뻗치기. 잠행취재. 사건 현장에서 움직이지 않고 취재한다는 뜻' }
           ]
         }
       ]
@@ -500,46 +525,59 @@ const DEFAULT_DATA = {
     },
     {
       id: 'cat-food',
-      name: '요식업 창업',
+      name: '요식업',
       stages: [
         {
-          id: 'st-fo1', name: '인허가·신고',
+          id: 'st-fo-kitchen', name: '주방 작업',
           words: [
-            { id: 'w-fo1', term: '식품영업 허가·신고', definition: '음식점 운영 전 관할 구청에 제출하는 법적 행정 절차. 일반음식점·휴게음식점은 신고, 단란주점 등은 허가 대상.' },
-            { id: 'w-fo2', term: 'HACCP(해썹)', definition: '식품 원재료부터 제조·유통·판매까지 각 단계에서 위해 요소를 분석·관리하는 식품 안전 관리 시스템.' },
-            { id: 'w-fo3', term: '영업자 위생 교육', definition: '식품위생법에 따라 신규 영업자가 영업 시작 전, 기존 영업자가 매년 이수해야 하는 의무 교육.' }
+            { id: 'w-fo1', term: 'Fire', definition: '해당 주문을 즉시 조리 시작하라는 지시' },
+            { id: 'w-fo2', term: 'Run the dish', definition: '플레이팅이 끝난 음식을 홀로 내보내라는 의미' },
+            { id: 'w-fo3', term: 'Mise (Mise en place)', definition: '영업 전에 재료와 도구를 미리 준비해 두는 작업' },
+            { id: 'w-fo4', term: 'A la minute', definition: '주문이 들어온 후 즉석에서 조리하는 방식' },
+            { id: 'w-fo5', term: '5 Out / 3 Out', definition: '몇 분 뒤에 음식이 나갈 예정인지 알리는 시간 콜' },
+            { id: 'w-fo6', term: 'Short', definition: '접시 구성에서 뭔가 빠졌을 때 사용하는 말' },
+            { id: 'w-fo7', term: 'Flash', definition: '고기 등을 잠깐 더 익히거나 데워 마무리하는 작업' },
+            { id: 'w-fo8', term: 'Dupe', definition: '주문서를 복사하거나 중복 확인하는 것' },
+            { id: 'w-fo9', term: '와까리 났다', definition: '소스가 유화가 안 되고 분리되었다는 뜻' },
+            { id: 'w-fo10', term: '노바시 해라', definition: '소스를 풀거나 묽게 하다' },
+            { id: 'w-fo11', term: '나라시', definition: '평평하게 펴다' },
+            { id: 'w-fo12', term: '모리해라', definition: '한데 모아라. 플레이팅해야 할 접시가 많은 경우 한곳에 모아서 작업하는 것' },
+            { id: 'w-fo13', term: '시마이', definition: '작업의 마감이나 끝' }
           ]
         },
         {
-          id: 'st-fo2', name: '주방 설비',
+          id: 'st-fo-ops', name: '운영/인력',
           words: [
-            { id: 'w-fo4', term: '그리스 트랩(유수분리기)', definition: '싱크대 배수에서 기름·찌꺼기를 분리·포집하는 장치. 하수관 막힘과 환경 오염 방지를 위한 법적 설치 의무.' },
-            { id: 'w-fo5', term: '후드 덕트', definition: '조리 시 발생하는 열기·연기·냄새를 외부로 배출하는 환기 시스템. 배출 풍량이 부족하면 작업 환경·소방 문제 발생.' },
-            { id: 'w-fo6', term: '식품용 스테인리스(SUS304)', definition: '내식성·위생성이 우수해 주방 조리대·용기·집기에 사용하는 스테인리스 강종. 식품 접촉면에 법적 사용 권장.' }
+            { id: 'w-fo14', term: 'In the weeds / Weeded', definition: '주문이 몰려 정신없이 바쁜 상태' },
+            { id: 'w-fo15', term: 'Dying on the pass', definition: '완성된 음식이 픽업되지 못하고 식어가는 상황' },
+            { id: 'w-fo16', term: '시다하다', definition: '시다바리. 보조하다(하는 사람)' },
+            { id: 'w-fo17', term: '나와바리', definition: '구역, 섹션, 파트' },
+            { id: 'w-fo18', term: '곤조있네', definition: '텃세를 부리거나 자존심이 세고 개성이 강한 사람' }
           ]
         },
         {
-          id: 'st-fo3', name: '식자재 유통',
+          id: 'st-fo-guests', name: '고객/예약',
           words: [
-            { id: 'w-fo7', term: '콜드체인', definition: '식재료의 생산부터 판매까지 냉장·냉동 온도를 유지하며 유통하는 시스템. 체인이 끊기면 식품 안전 위험 발생.' },
-            { id: 'w-fo8', term: 'FIFO(선입선출)', definition: '먼저 입고된 식자재를 먼저 사용하는 재고 관리 원칙. 식재료 유통기한 초과 및 폐기 손실 최소화를 위한 기본 룰.' },
-            { id: 'w-fo9', term: '발주 단위(MOQ)', definition: '식자재 공급업체가 설정한 최소 주문 수량. MOQ 미만 주문 시 단가가 높아지거나 납품 거절될 수 있음.' }
+            { id: 'w-fo19', term: 'PPX (Personne Extraordinaire)', definition: 'VIP와 비슷한 의미로 특별 대우 대상 손님' },
+            { id: 'w-fo20', term: 'NPR (Nice People Get Rewarded)', definition: '단골이나 친분 있는 손님에게 서비스를 챙겨주라는 표시' },
+            { id: 'w-fo21', term: 'Deuce', definition: '2인 테이블' },
+            { id: 'w-fo22', term: '4-top / 12-top', definition: '4인석, 12인석 같은 단체 좌석 표현' }
           ]
         },
         {
-          id: 'st-fo4', name: '메뉴 개발',
+          id: 'st-fo-stock', name: '재고/판매',
           words: [
-            { id: 'w-fo10', term: '표준 레시피', definition: '메뉴 품질의 일관성을 위해 재료·계량·조리 순서를 문서화한 조리 기준서. 신규 직원 교육 및 원가 관리의 기준.' },
-            { id: 'w-fo11', term: '원가율(F/C)', definition: '메뉴 판매가 대비 식재료비의 비율. 일반적으로 30~35%를 적정 수준으로 관리하며 메뉴 가격 책정의 핵심 지표.' },
-            { id: 'w-fo12', term: '포션(Portion)', definition: '1인분 기준 식재료의 표준 중량·양. 포션 관리를 통해 원가율 안정화와 균일한 음식량 제공 가능.' }
+            { id: 'w-fo23', term: "86'd (에이티식스드)", definition: '재료가 떨어져 더 이상 판매할 수 없는 상태' }
           ]
         },
         {
-          id: 'st-fo5', name: '위생·검수',
+          id: 'st-fo-tools', name: '도구',
           words: [
-            { id: 'w-fo13', term: '교차오염', definition: '날 식재료의 세균이 조리된 음식이나 조리 도구로 옮겨지는 현상. 도마·칼의 육류·채소 분리 사용으로 예방.' },
-            { id: 'w-fo14', term: '검수 일지', definition: '납품 식재료의 온도·신선도·중량·유통기한을 입고 시점에 기록하는 문서. HACCP 인증 시 필수 관리 기록.' },
-            { id: 'w-fo15', term: '온도 이력 관리', definition: '냉장·냉동 식재료의 보관 온도를 시간대별로 기록·모니터링하는 관리 방식. 자동 온도 로거 또는 IoT 센서로 관리.' }
+            { id: 'w-fo24', term: '야스리', definition: '스틸(steel), 칼을 가는 긴 쇠 막대' },
+            { id: 'w-fo25', term: '빵빵이', definition: '체, 스트레인, 채반' },
+            { id: 'w-fo26', term: '빡빡이', definition: '주방 바닥 물기를 제거하는 끌게, 스크래퍼' },
+            { id: 'w-fo27', term: 'The Rail / The Board', definition: '주문서가 걸리는 레일 또는 주문 관리 구역' },
+            { id: 'w-fo28', term: '빠시', definition: '남은 자투리 재료(물건)들', example: '고기 빠시 남은 것들로 함박스테이크 만들면 돼' }
           ]
         }
       ]
