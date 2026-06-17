@@ -164,7 +164,7 @@ const DEFAULT_DATA = {
             { id: 'w-film6', term: '니쥬', definition: '깔판, 마룻바닥. 바닥에 추가 단을 깔고, 그 위에 세트를 지을 때 바닥에 깔린 마루를 지칭함' },
             { id: 'w-film7', term: '데꼬보꼬', definition: '요철. 울퉁불퉁. 울룩불룩. 평평한 작업이 필요한 부분' },
             { id: 'w-film8', term: '바라시', definition: '촬영 종료 후 짐을 챙기는 것. 촬영장에서 철수하는 것' },
-            { id: 'w-film9', term: '오사마이/오사마리', definition: '마지막 촬영' },
+            { id: 'w-film9', term: '오사마리/오사마이', definition: '최종적인 정리 과정' },
             { id: 'w-film10', term: '혼방', definition: '리허설이 아닌 실제 본 촬영 시작' },
             { id: 'w-film11', term: '히로시', definition: '앵글을 잡거나 배우의 동선을 미리 표시할 때 바닥에 붙이는 마킹(청테이프)' }
           ]
@@ -248,6 +248,41 @@ const DEFAULT_DATA = {
       ]
     },
     {
+      id: 'cat-realty',
+      name: '부동산',
+      stages: [
+        {
+          id: 'st-realty-development', name: '개발/분양/투자',
+          words: [
+            { id: 'w-realty1', term: '깜깜이 분양', definition: '별다른 홍보 없이 진행하는 분양 방식' },
+            { id: 'w-realty2', term: '뚜껑', definition: '토지 지분 없이 입주권이 나오는 무허가 건물' },
+            { id: 'w-realty3', term: '피(P)', definition: '분양권에 붙은 프리미엄(웃돈)' },
+            { id: 'w-realty4', term: '야장', definition: '청약 당첨자 발표일에 형성되는 거래 시장' },
+            { id: 'w-realty5', term: '대장', definition: '해당 지역의 시세를 주도하는 대표 아파트' },
+            { id: 'w-realty6', term: '상투', definition: '가격이 최고점에 도달한 상태 또는 최고가에 매수한 경우' },
+            { id: 'w-realty7', term: '설거지', definition: '세력이 빠져나간 뒤 남은 물량을 일반 투자자가 떠안는 상황' }
+          ]
+        },
+        {
+          id: 'st-realty-brokerage', name: '중개/거래',
+          words: [
+            { id: 'w-realty8', term: '교통', definition: '여러 중개업소가 공동으로 거래를 성사시키는 것' },
+            { id: 'w-realty9', term: '데두리', definition: '실제 가격보다 높게 불러 차익을 남기는 행위' },
+            { id: 'w-realty10', term: '찍기', definition: '좋은 매물을 먼저 확보한 뒤 웃돈을 붙여 되파는 방식' }
+          ]
+        },
+        {
+          id: 'st-realty-field', name: '현장/업계 관행',
+          words: [
+            { id: 'w-realty11', term: '임장', definition: '매물이나 지역을 직접 방문해 조사하는 활동' },
+            { id: 'w-realty12', term: '하시', definition: '즉시 입주 가능' },
+            { id: 'w-realty13', term: '떴다방', definition: '분양 현장을 따라다니며 영업하는 이동식 불법 중개업소' },
+            { id: 'w-realty14', term: '똠방', definition: '무허가 중개업자' }
+          ]
+        }
+      ]
+    },
+    {
       id: 'cat-food',
       name: '요식업',
       stages: [
@@ -324,7 +359,7 @@ const DEFAULT_DATA = {
             { id: 'w-ad4', term: '바리치다', definition: 'Variation하다의 줄임말. 하나의 소재를 다양한 버전으로 만드는 것' },
             { id: 'w-ad5', term: '커트바리', definition: '콘티를 컷 바이 컷으로 나눠서 구성한다는 의미' },
             { id: 'w-ad6', term: '닦는다', definition: '영상의 색감이나 질감을 다듬거나, 아이디어를 더욱 개선한다는 뜻' },
-            { id: 'w-ad7', term: '오사마이/오사마리', definition: '최종적인 정리 과정' }
+            { id: 'w-ad7', term: '오사마리/오사마이', definition: '최종적인 정리 과정' }
           ]
         },
         {
@@ -343,6 +378,21 @@ const DEFAULT_DATA = {
 
 // ── State ──────────────────────────────────────────────────────────────────
 const VIEW_STATE_KEY = 'fielddict:viewState';
+const LIKED_WORDS_KEY = 'fielddict:likedWords';
+
+function loadLikedWords() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LIKED_WORDS_KEY));
+    return new Set(Array.isArray(saved) ? saved : []);
+  } catch {
+    localStorage.removeItem(LIKED_WORDS_KEY);
+    return new Set();
+  }
+}
+
+function saveLikedWords() {
+  localStorage.setItem(LIKED_WORDS_KEY, JSON.stringify([...state.likedWordIds]));
+}
 
 async function loadData() {
   try {
@@ -372,6 +422,8 @@ let state = {
   allWordsFilterCat: null,
   allWordsSortBy: 'alpha',
   theme: localStorage.getItem('theme') || 'light',
+  helpOpen: false,
+  likedWordIds: loadLikedWords(),
 };
 
 function persistViewState() {
@@ -429,11 +481,70 @@ function toggleTheme() {
   render();
 }
 
+function toggleHelpPopover(event) {
+  event.stopPropagation();
+  state.helpOpen = !state.helpOpen;
+  render();
+}
+
 function save() {
   supabase
     .from('app_data')
     .upsert({ id: 'singleton', data: state.data, updated_at: new Date().toISOString() })
     .then(({ error }) => { if (error) console.error('저장 실패:', error); });
+}
+
+function getWordLikes(word) {
+  return word.likes ?? 0;
+}
+
+function getWordsLikes(words) {
+  return words.reduce((sum, word) => sum + getWordLikes(word), 0);
+}
+
+function getCategoryLikes(cat) {
+  return cat.stages.reduce(
+    (sum, stage) => sum + stage.words.reduce((wordSum, word) => wordSum + getWordLikes(word), 0),
+    0
+  );
+}
+
+function isWordLiked(word) {
+  return state.likedWordIds.has(word.id);
+}
+
+function isWordsLiked(words) {
+  return words.some(isWordLiked);
+}
+
+function likeWords(words, event) {
+  event.stopPropagation();
+  if (words.length === 0) return;
+  const likedWords = words.filter(isWordLiked);
+  if (likedWords.length > 0) {
+    likedWords.forEach(word => {
+      word.likes = Math.max(0, getWordLikes(word) - 1);
+      state.likedWordIds.delete(word.id);
+    });
+  } else {
+    words[0].likes = getWordLikes(words[0]) + 1;
+    state.likedWordIds.add(words[0].id);
+  }
+  saveLikedWords();
+  save();
+  render();
+}
+
+function likeButton(words) {
+  const wordList = Array.isArray(words) ? words : [words];
+  const liked = isWordsLiked(wordList);
+  return h('button', {
+    class: 'like-button' + (liked ? ' active' : ''),
+    title: liked ? '좋아요 취소' : '좋아요',
+    'aria-label': `좋아요 ${getWordsLikes(wordList)}개`,
+    'aria-pressed': String(liked),
+    onClick: event => likeWords(wordList, event)
+  }, '👍', h('span', { class: 'like-count' }, String(getWordsLikes(wordList))));
 }
 
 function uid() {
@@ -538,7 +649,22 @@ function render() {
       title: state.theme === 'dark' ? '라이트 모드' : '다크 모드',
       'aria-label': state.theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환',
       onClick: toggleTheme
-    }, state.theme === 'dark' ? '☀' : '☾')
+    }, state.theme === 'dark' ? '☀' : '☾'),
+    h('div', { class: 'help-popover-wrap' },
+      h('button', {
+        class: 'btn btn-ghost help-toggle',
+        title: '도움말',
+        'aria-label': '웹사이트 도움말 보기',
+        'aria-expanded': String(state.helpOpen),
+        onClick: toggleHelpPopover
+      }, 'i'),
+      state.helpOpen ? h('div', { class: 'help-popover', role: 'dialog', 'aria-label': '웹사이트 도움말' },
+        h('div', { class: 'help-popover-title' }, '업계 은어 사전 안내'),
+        h('p', { class: 'help-popover-text' },
+          '업계 은어, 전문 용어, 약어 등 업계 밖에서는 접하기 어려운 언어를 모아둔 오픈 사전입니다. 누구나 다양한 분야의 전문 용어를 쉽게 찾아보고 배울 수 있습니다. 닉네임만 입력하면 새로운 용어를 직접 추가하고 공유할 수 있습니다.'
+        )
+      ) : null
+    )
   );
 
   if (state.view === 'home') {
@@ -584,7 +710,7 @@ function renderHome(container) {
     : [...cats]
   ).sort((a, b) => {
     if (state.sortBy === 'alpha')   return a.name.localeCompare(b.name, 'ko');
-    if (state.sortBy === 'popular') return (b.views ?? 0) - (a.views ?? 0);
+    if (state.sortBy === 'popular') return getCategoryLikes(b) - getCategoryLikes(a);
     if (state.sortBy === 'recent')  return (b.updatedAt ?? 0) - (a.updatedAt ?? 0);
     return 0;
   });
@@ -687,7 +813,7 @@ function renderAllWords(container) {
       return tb - ta;
     });
   } else if (state.allWordsSortBy === 'popular') {
-    wordEntries.sort((a, b) => (b.word.views ?? 0) - (a.word.views ?? 0));
+    wordEntries.sort((a, b) => getWordLikes(b.word) - getWordLikes(a.word));
   } else {
     wordEntries.sort((a, b) => a.word.term.localeCompare(b.word.term, 'ko'));
   }
@@ -700,7 +826,7 @@ function renderAllWords(container) {
     if (!group) {
       const nextGroup = {
         term: entry.word.term,
-        senses: [{ word: entry.word, contexts: [{ cat: entry.cat, stage: entry.stage }] }]
+        senses: [{ word: entry.word, words: [entry.word], contexts: [{ cat: entry.cat, stage: entry.stage }] }]
       };
       groupedByTerm.set(key, nextGroup);
       groupedWords.push(nextGroup);
@@ -711,12 +837,18 @@ function renderAllWords(container) {
       `${item.word.definition ?? ''}::${item.word.example ?? ''}`.trim().toLowerCase() === senseKey
     );
     if (!sense) {
-      sense = { word: entry.word, contexts: [] };
+      sense = { word: entry.word, words: [], contexts: [] };
       group.senses.push(sense);
     }
+    if (!sense.words.includes(entry.word)) sense.words.push(entry.word);
     if (!sense.contexts.some(context => context.cat.id === entry.cat.id && context.stage.id === entry.stage.id)) {
       sense.contexts.push({ cat: entry.cat, stage: entry.stage });
     }
+  }
+  if (state.allWordsSortBy === 'popular') {
+    groupedWords.sort((a, b) =>
+      getWordsLikes(b.senses.flatMap(sense => sense.words)) - getWordsLikes(a.senses.flatMap(sense => sense.words))
+    );
   }
 
   const buildSortBar = () => {
@@ -757,9 +889,13 @@ function renderAllWords(container) {
       panel.append(emptyState('📭', '단어가 없습니다', query ? '검색어를 바꿔보세요' : '단어를 추가해 보세요'));
     } else {
       groupedWords.forEach(({ term, senses }) => {
+        const groupWords = senses.flatMap(sense => sense.words);
         panel.append(
           h('div', { class: 'word-item' },
-            h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, term),
+            h('div', { class: 'word-item-head' },
+              h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, term),
+              likeButton(groupWords)
+            ),
             senses.map(({ word, contexts }, senseIndex) =>
               h('div', { class: 'word-sense' },
                 h('div', { class: 'word-sense-body' },
@@ -855,9 +991,12 @@ function renderCategory(container) {
       allCatWords.forEach(({ word: w, stage: s }) => {
         wordsPanel.append(
           h('div', { class: 'word-item' },
-            h('div', { style: 'display:flex;align-items:flex-start;justify-content:space-between;gap:12px' },
+            h('div', { class: 'word-item-head' },
               h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, w.term),
-              h('button', { class: 'tag tag-stage tag-button', style: 'flex-shrink:0', onClick: () => selectStage(s.id) }, s.name)
+              h('div', { class: 'word-item-actions' },
+                likeButton(w),
+                h('button', { class: 'tag tag-stage tag-button', style: 'flex-shrink:0', onClick: () => selectStage(s.id) }, s.name)
+              )
             ),
             h('div', { class: 'word-item-def', style: 'margin-top:4px' }, w.definition || '설명 없음'),
             wordExample(w)
@@ -873,7 +1012,10 @@ function renderCategory(container) {
     } else {
       stage.words.forEach(w => {
         const item = h('div', { class: 'word-item' },
-          h('div', { class: 'word-item-term' }, w.term),
+          h('div', { class: 'word-item-head' },
+            h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, w.term),
+            likeButton(w)
+          ),
           h('div', { class: 'word-item-def' }, w.definition || '설명 없음'),
           wordExample(w)
         );
@@ -1177,7 +1319,18 @@ function shakeInput() {
 
 // ── Global keyboard shortcuts ────────────────────────────────────────────────
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
+  if (e.key !== 'Escape') return;
+  closeModal();
+  if (state.helpOpen) {
+    state.helpOpen = false;
+    render();
+  }
+});
+
+document.addEventListener('click', e => {
+  if (!state.helpOpen || e.target.closest('.help-popover-wrap')) return;
+  state.helpOpen = false;
+  render();
 });
 
 document.getElementById('logo-btn').addEventListener('click', goHome);
