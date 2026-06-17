@@ -874,7 +874,7 @@ function renderAllWords(container) {
         onClick: () => { state.allWordsFilterCat = cat.id; renderAllWords(container); }
       }, cat.name));
     }
-    return bar;
+    return h('div', { class: 'filter-scroll-wrap' }, bar);
   };
 
   const buildWordList = () => {
@@ -924,7 +924,7 @@ function renderAllWords(container) {
   };
   if (container.querySelector('.search-bar')) {
     container.querySelector('.sort-bar')?.replaceWith(buildSortBar());
-    container.querySelector('.all-words-filter-bar')?.replaceWith(buildFilterBar());
+    container.querySelector('.filter-scroll-wrap')?.replaceWith(buildFilterBar());
     container.querySelector('.words-panel')?.replaceWith(buildWordList());
     return;
   }
@@ -994,8 +994,8 @@ function renderCategory(container) {
             h('div', { class: 'word-item-head' },
               h('div', { class: 'word-item-term', style: 'margin-bottom:0' }, w.term),
               h('div', { class: 'word-item-actions' },
-                likeButton(w),
-                h('button', { class: 'tag tag-stage tag-button', style: 'flex-shrink:0', onClick: () => selectStage(s.id) }, s.name)
+                h('button', { class: 'tag tag-stage tag-button', style: 'flex-shrink:0', onClick: () => selectStage(s.id) }, s.name),
+                likeButton(w)
               )
             ),
             h('div', { class: 'word-item-def', style: 'margin-top:4px' }, w.definition || '설명 없음'),

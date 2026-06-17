@@ -844,11 +844,14 @@ textarea.form-input {
 }
 
 /* ── All-words filter bar ── */
+.filter-scroll-wrap {
+  margin-bottom: 20px;
+}
+
 .all-words-filter-bar {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
 }
 
 .filter-chip {
@@ -881,19 +884,55 @@ textarea.form-input {
   /* Header */
   .header {
     padding: 0 14px;
-    height: 52px;
-    gap: 4px;
+    height: auto;
+    min-height: 52px;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-content: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 
   .logo {
-    font-size: 14px;
+    font-size: 16px;
     white-space: nowrap;
     flex-shrink: 0;
+    order: 1;
+  }
+
+  #header-actions {
+    order: 2;
+    margin-left: auto;
+    gap: 6px;
+  }
+
+  #header-nav {
+    order: 3;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .header-nav-tabs {
+    width: 100%;
+    padding: 3px;
+    border-radius: var(--radius-sm);
+    background: var(--bg);
   }
 
   .header-nav-tab {
+    flex: 1;
+    min-width: 0;
     padding: 5px 10px;
     font-size: 12.5px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .header-nav-tab.active {
+    background: rgba(67, 97, 238, 0.10);
+    color: var(--blue);
+    font-weight: 800;
+    box-shadow: none;
   }
 
   /* 단어 추가 버튼 */
@@ -909,6 +948,13 @@ textarea.form-input {
 
   .page-title {
     font-size: 21px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .page-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
   }
 
   .home-summary {
@@ -939,16 +985,53 @@ textarea.form-input {
   }
 
   /* Filter bar — 가로 스크롤 */
+  .filter-scroll-wrap {
+    position: relative;
+    margin-left: -14px;
+    margin-right: -14px;
+    overflow: hidden;
+  }
+
+  .filter-scroll-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 4px;
+    width: 48px;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(244, 246, 251, 0), var(--bg) 72%);
+  }
+
+  .filter-scroll-wrap::before {
+    content: '›';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    z-index: 2;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1px solid var(--border);
+    color: var(--blue);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 18px;
+    text-align: center;
+    transform: translateY(-58%);
+    pointer-events: none;
+    box-shadow: var(--shadow-sm);
+  }
+
   .all-words-filter-bar {
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 4px;
     scrollbar-width: none;
-    margin-left: -14px;
-    margin-right: -14px;
     padding-left: 14px;
-    padding-right: 14px;
+    padding-right: 56px;
   }
 
   .all-words-filter-bar::-webkit-scrollbar {
@@ -962,7 +1045,13 @@ textarea.form-input {
 
   .word-sense {
     flex-direction: column;
+    align-items: flex-start;
     gap: 6px;
+  }
+
+  .word-sense-body {
+    width: 100%;
+    text-align: left;
   }
 
   .word-sense-tags {
